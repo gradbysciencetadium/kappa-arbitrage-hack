@@ -135,7 +135,9 @@ function createApp() {
       const brief = detectBrief(reply);
       if (brief) {
         // Data-aware gate: only hand off to Bara if we actually have data for the location.
-        const cov = coverage.resolveLocation(brief.location_focus);
+        // Smart resolution — LA name, ward/neighbourhood, then model inference (constrained
+        // to the real covered list) — so a place INSIDE a covered LA still resolves.
+        const cov = await coverage.resolveLocationSmart(brief.location_focus);
         if (cov.status === "covered") {
           brief.location_focus = cov.canonical; // normalise to the exact dataset name
           await db.saveBrief(convId, brief);
