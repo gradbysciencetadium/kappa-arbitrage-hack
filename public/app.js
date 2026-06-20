@@ -78,12 +78,28 @@ chatForm.addEventListener("submit", async (e) => {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Kick off Bara (async job), then poll for live progress until the report is ready.
+// Bara pipeline stages — keys match the server's onProgress strings.
+const BARA_STAGES = [
+  { key: "plan", label: "Plan", match: ["planning"] },
+  { key: "review", label: "Review", match: ["reviewing the plan"] },
+  { key: "compute", label: "Compute", match: ["computing metrics"] },
+  { key: "research", label: "Research", match: ["researching"] },
+  { key: "validate", label: "Validate", match: ["validation"] },
+  { key: "synth", label: "Synthesize", match: ["writing the report"] },
+  { key: "audit", label: "Audit", match: ["reviewing the report", "revising"] },
+];
+const HEX = "0123456789abcdef";
+const randHex = (n) => Array.from({ length: n }, () => HEX[(Math.random() * 16) | 0]).join("");
+
+// Kick off Bara (async job), then poll for live progress, animating the pipeline.
 async function runAnalysis() {
-  const banner = addBaraWorking();
+  const wrap = addBaraWorking();
+  const finish = () => { if (wrap._cleanup) wrap._cleanup(); wrap.remove(); };
   const setProgress = (txt) => {
-    const p = banner.querySelector(".bara-progress");
-    if (p && txt) p.textContent = "Bara is " + txt + "…";
+    if (!txt) return;
+    const status = wrap.querySelector(".bara-status");
+    if (status) status.textContent = "› " + txt;
+    markStage(wrap, txt);
   };
   try {
     const res = await fetch("/api/analyze", {
@@ -103,7 +119,9 @@ async function runAnalysis() {
       if (!r.ok) throw new Error(rd.error || "Could not fetch report.");
       if (rd.progress) setProgress(rd.progress);
       if (rd.status === "done") {
-        banner.remove();
+        markAllDone(wrap);
+        await sleep(450);
+        finish();
         renderReport(rd.result, rd.meta);
         addLeadForm();
         return;
@@ -112,22 +130,54 @@ async function runAnalysis() {
     }
     throw new Error("Analysis timed out.");
   } catch (err) {
-    banner.remove();
+    finish();
     addErrorMessage("Bara: " + err.message);
   }
 }
 
+// Live Bara pipeline visualization: an animated agent orb + stage nodes + cryptic scramble.
 function addBaraWorking() {
   const div = document.createElement("div");
-  div.className = "msg agent bara-working";
+  div.className = "msg agent bara-stage-wrap";
+  const nodes = BARA_STAGES.map(
+    (s) => `<div class="pl-node" data-key="${s.key}"><span class="pl-dot"></span><span class="pl-label">${s.label}</span></div>`
+  ).join("");
   div.innerHTML =
-    "<strong>Bara</strong> is running your analysis — planning, pulling the data, computing the " +
-    "metrics, cross-checking a comparable, and writing the report." +
-    "<div class='bara-progress'>Bara is queued…</div>" +
-    "<div class='typing'><span></span><span></span><span></span></div>";
+    `<div class="bara-head">
+       <div class="agent-orb bara computing"><span class="orb-core"></span></div>
+       <div class="bara-title">Bara is analysing<small>sovereign pipeline · FLock qwen3-30b</small></div>
+     </div>
+     <div class="bara-pipeline"><div class="pl-track"></div>${nodes}</div>
+     <div class="bara-status">› queued</div>
+     <div class="bara-crypt"></div>`;
   chatWindow.appendChild(div);
   scrollDown();
+  const crypt = div.querySelector(".bara-crypt");
+  const id = setInterval(() => {
+    crypt.textContent = "0x" + randHex(8) + "  sha256:" + randHex(24) + "…";
+  }, 90);
+  div._cleanup = () => clearInterval(id);
   return div;
+}
+
+function markStage(wrap, txt) {
+  const t = txt.toLowerCase();
+  let idx = -1;
+  BARA_STAGES.forEach((s, i) => { if (s.match.some((m) => t.includes(m))) idx = i; });
+  if (idx < 0) return;
+  BARA_STAGES.forEach((s, i) => {
+    const node = wrap.querySelector(`.pl-node[data-key="${s.key}"]`);
+    if (!node) return;
+    node.classList.toggle("done", i < idx);
+    node.classList.toggle("live", i === idx);
+    if (i > idx) node.classList.remove("done", "live");
+  });
+}
+
+function markAllDone(wrap) {
+  wrap.querySelectorAll(".pl-node").forEach((n) => { n.classList.remove("live"); n.classList.add("done"); });
+  const status = wrap.querySelector(".bara-status");
+  if (status) status.textContent = "✓ report ready";
 }
 
 // "Apply for a free deep-dive" lead capture, shown after the report.
@@ -276,10 +326,15 @@ function addErrorMessage(text) {
   scrollDown();
 }
 
+// Kappy "thinking" — an animated agent orb while intake processes your message.
+const KAPPY_DOING = ["parsing your context…", "forming the next question…", "structuring the brief…"];
 function addTyping() {
   const div = document.createElement("div");
-  div.className = "typing";
-  div.innerHTML = "<span></span><span></span><span></span>";
+  div.className = "agent-thinking kappy";
+  div.innerHTML =
+    `<div class="agent-orb kappy"><span class="orb-core"></span></div>
+     <div><span class="agent-name">Kappy</span> <span class="agent-do"></span></div>`;
+  div.querySelector(".agent-do").textContent = KAPPY_DOING[(Math.random() * KAPPY_DOING.length) | 0];
   chatWindow.appendChild(div);
   scrollDown();
   return div;

@@ -469,6 +469,97 @@ footer {
 .verify-result.bad { color: #ff8080; }
 .gov-rec.broken { border-color: #ff8080; background: rgba(255, 80, 80, 0.08); box-shadow: 0 0 0 1px rgba(255, 80, 80, 0.4); }
 
+/* ================= REVAMP: blue glow / cryptic / live process ================= */
+
+/* brighter ambient + a faint scanning grid behind everything */
+body::before { background: rgba(64, 130, 255, 0.34); }
+body::after { background: rgba(70, 190, 255, 0.20); }
+.grid-overlay {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(90, 169, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90, 169, 255, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 70%);
+}
+
+/* the brand mark gets a soft live pulse */
+.brand-mark { animation: orbGlow 3.4s ease-in-out infinite; }
+
+/* animated glow line (header underline / section dividers) */
+.glow-line { position: relative; height: 1px; overflow: hidden;
+  background: linear-gradient(90deg, transparent, var(--glass-border), transparent); }
+.glow-line::after {
+  content: ""; position: absolute; top: 0; left: 0; width: 28%; height: 100%;
+  background: linear-gradient(90deg, transparent, var(--accent-2), transparent);
+  filter: drop-shadow(0 0 6px var(--accent-2));
+  animation: glowSweep 3.6s linear infinite;
+}
+
+/* ---- Agent orbs (Kappy / Bara) ---- */
+.agent-orb { position: relative; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; }
+.agent-orb .orb-core {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #cfe6ff, var(--accent) 58%, #244e8c);
+  box-shadow: 0 0 22px var(--accent), inset 0 0 8px rgba(255, 255, 255, 0.45);
+  animation: orbGlow 2.6s ease-in-out infinite;
+}
+.agent-orb::before { /* rotating conic ring */
+  content: ""; position: absolute; inset: -3px; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg, var(--accent-2) 70deg, transparent 150deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
+  animation: orbSpin 2.6s linear infinite;
+}
+.agent-orb::after { /* expanding pulse ring */
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid var(--accent); animation: pulseRing 2.4s ease-out infinite;
+}
+.agent-orb.computing::before { animation-duration: 1.0s; background: conic-gradient(from 0deg, transparent 0deg, var(--accent-2) 90deg, #8be0ff 150deg, transparent 220deg); }
+.agent-orb.computing .orb-core { animation-duration: 1.2s; }
+.agent-orb.kappy .orb-core { background: radial-gradient(circle at 35% 30%, #d6e9ff, #6fb0ff 58%, #2f63b8); }
+
+/* Kappy "thinking" row (replaces typing dots) */
+.agent-thinking { align-self: flex-start; display: flex; align-items: center; gap: 0.8rem; }
+.agent-thinking .agent-orb { width: 40px; height: 40px; }
+.agent-thinking .agent-orb .orb-core { width: 22px; height: 22px; }
+.agent-name { color: #fff; font-weight: 600; font-size: 0.9rem; }
+.agent-do { color: var(--text-dim); font-size: 0.82rem; font-family: ui-monospace, monospace; }
+
+/* ---- Bara live pipeline ---- */
+.bara-stage-wrap { align-self: stretch; }
+.bara-head { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.4rem; }
+.bara-head .agent-orb { width: 46px; height: 46px; }
+.bara-title { color: #fff; font-weight: 600; font-size: 0.95rem; }
+.bara-title small { display: block; color: var(--text-dim); font-weight: 400; font-size: 0.78rem; font-family: ui-monospace, monospace; }
+
+.bara-pipeline { position: relative; display: flex; justify-content: space-between; margin: 1.1rem 0 0.6rem; padding: 0 0.3rem; }
+.pl-track { position: absolute; top: 6px; left: 8%; right: 8%; height: 2px; background: rgba(255, 255, 255, 0.10); overflow: hidden; border-radius: 2px; }
+.pl-track::after { content: ""; position: absolute; inset: 0; width: 35%;
+  background: linear-gradient(90deg, transparent, var(--accent-2), transparent);
+  filter: drop-shadow(0 0 5px var(--accent-2)); animation: glowSweep 2.2s linear infinite; }
+.pl-node { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 0.45rem; width: 3rem; text-align: center; }
+.pl-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--bg-soft); border: 2px solid rgba(255, 255, 255, 0.22); transition: all 0.35s ease; }
+.pl-label { font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+.pl-node.done .pl-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 8px rgba(90, 169, 255, 0.5); }
+.pl-node.done .pl-label { color: var(--text); }
+.pl-node.live .pl-dot { background: var(--accent-2); border-color: var(--accent-2); animation: nodePulse 1.1s ease-in-out infinite; transform: scale(1.25); }
+.pl-node.live .pl-label { color: #fff; }
+
+.bara-status { color: var(--accent-2); font-size: 0.85rem; font-family: ui-monospace, monospace; margin-top: 0.3rem; }
+.bara-crypt { font-family: ui-monospace, monospace; font-size: 0.72rem; color: rgba(126, 200, 255, 0.55); letter-spacing: 0.12em; margin-top: 0.35rem; white-space: nowrap; overflow: hidden; }
+
+@keyframes orbSpin { to { transform: rotate(360deg); } }
+@keyframes orbGlow { 0%, 100% { box-shadow: 0 0 18px var(--accent), inset 0 0 8px rgba(255, 255, 255, 0.4); } 50% { box-shadow: 0 0 30px var(--accent-2), inset 0 0 10px rgba(255, 255, 255, 0.55); } }
+@keyframes pulseRing { 0% { transform: scale(0.72); opacity: 0.65; } 100% { transform: scale(1.7); opacity: 0; } }
+@keyframes glowSweep { 0% { transform: translateX(-130%); } 100% { transform: translateX(430%); } }
+@keyframes nodePulse { 0%, 100% { box-shadow: 0 0 10px var(--accent-2); } 50% { box-shadow: 0 0 22px var(--accent-2); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-orb::before, .agent-orb::after, .pl-track::after, .glow-line::after,
+  .brand-mark, .agent-orb .orb-core, .pl-node.live .pl-dot { animation: none !important; }
+}
+
 .report-head {
   display: flex;
   flex-wrap: wrap;
