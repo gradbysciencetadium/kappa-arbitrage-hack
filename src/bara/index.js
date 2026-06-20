@@ -23,26 +23,33 @@ async function runBara(brief, { onProgress = () => {} } = {}) {
   const location = brief.location_focus || null;
   const areas = store.listAreas(location);
 
-  // No structured data for this location/vertical yet — return an honest, limited report.
+  // No structured data for this location/vertical yet — return an honest, limited report
+  // that names what we DO cover (rather than silently analysing the wrong place).
   if (!areas.length) {
     onProgress("done");
+    const covered = store.availableLocalAuthorities();
+    const coverageLine = covered.length
+      ? `Kappa currently has live childcare data for: ${covered.join(", ")}.`
+      : "No datasets are currently loaded.";
     return {
       report: {
         executive_summary:
-          `Bara does not yet have a structured data layer for "${location || "this location"}" ` +
-          `(vertical: ${brief.vertical || "unspecified"}). A data-backed analysis requires the relevant ` +
-          `connectors (e.g., Ofsted + ONS for childcare) to be loaded for this area.`,
+          `Bara does not yet have a structured data layer for "${location || "this location"}", so it ` +
+          `cannot give a data-backed recommendation here without inventing figures — which it won't do. ` +
+          coverageLine,
         strategic_question: brief.strategic_question,
         recommended_locations: [],
         data_analysis: [],
         validation_cross_check: "Not available — no dataset loaded for this location.",
-        implementation_roadmap: [],
-        risks: ["Analysis limited by missing data layer for this location/vertical."],
-        confidence: 0.1,
+        implementation_roadmap: [
+          { phase: "To analyse this area", action: `Ingest the connectors for ${location || "this area"} (Ofsted + ONS + IMD), then re-run.` },
+        ],
+        risks: ["No data for this location — recommendation withheld rather than fabricated."],
+        confidence: 0,
         data_sources: [],
-        caveats: "Load the data connectors for this area to enable a full analysis.",
+        caveats: coverageLine,
       },
-      meta: { location, dataAvailable: false },
+      meta: { location, dataAvailable: false, covered },
     };
   }
 

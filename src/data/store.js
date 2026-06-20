@@ -34,16 +34,19 @@ function loadDatasets() {
 const DATASETS = loadDatasets();
 
 function resolveDataset(locationFocus) {
-  if (!locationFocus) {
-    // default to the first dataset available
-    const first = Object.keys(DATASETS)[0];
-    return first ? DATASETS[first] : null;
-  }
+  // No silent fallback: if we don't have data for the requested area, return null so the
+  // analysis is honest ("no data for X yet") rather than quietly analysing the wrong place.
+  if (!locationFocus) return null;
   const key = locationFocus.toLowerCase();
-  // direct LA match, else substring match (e.g. "Croydon, London" -> "croydon")
   if (DATASETS[key]) return DATASETS[key];
+  // substring match so "Croydon, London" / "North Croydon" still resolve to "croydon"
   const hit = Object.keys(DATASETS).find((k) => key.includes(k) || k.includes(key));
-  return hit ? DATASETS[hit] : DATASETS[Object.keys(DATASETS)[0]] || null;
+  return hit ? DATASETS[hit] : null;
+}
+
+// The local authorities we actually have data for (for honest "we cover: …" messaging).
+function availableLocalAuthorities() {
+  return Object.values(DATASETS).map((d) => (d._meta && d._meta.local_authority) || "?");
 }
 
 // ---- Query API (what Bara workers call) ----
@@ -89,4 +92,5 @@ module.exports = {
   getComparables,
   datasetMeta,
   isFixture,
+  availableLocalAuthorities,
 };

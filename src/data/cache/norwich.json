@@ -1,0 +1,117 @@
+{
+  "_meta": {
+    "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
+    "local_authority": "Norwich",
+    "provider_count": 0,
+    "geocoded_count": 0,
+    "ward_count": 13
+  },
+  "areas": [
+    {
+      "ward_code": "E05012901",
+      "ward_name": "Bowthorpe",
+      "local_authority": "Norwich",
+      "pop_0_4": 614,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012902",
+      "ward_name": "Catton Grove",
+      "local_authority": "Norwich",
+      "pop_0_4": 712,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012903",
+      "ward_name": "Crome",
+      "local_authority": "Norwich",
+      "pop_0_4": 628,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012904",
+      "ward_name": "Eaton",
+      "local_authority": "Norwich",
+      "pop_0_4": 364,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012905",
+      "ward_name": "Lakenham",
+      "local_authority": "Norwich",
+      "pop_0_4": 650,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012906",
+      "ward_name": "Mancroft",
+      "local_authority": "Norwich",
+      "pop_0_4": 377,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012907",
+      "ward_name": "Mile Cross",
+      "local_authority": "Norwich",
+      "pop_0_4": 643,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012908",
+      "ward_name": "Nelson (Norwich)",
+      "local_authority": "Norwich",
+      "pop_0_4": 427,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012909",
+      "ward_name": "Sewell",
+      "local_authority": "Norwich",
+      "pop_0_4": 544,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012910",
+      "ward_name": "Thorpe Hamlet",
+      "local_authority": "Norwich",
+      "pop_0_4": 371,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012911",
+      "ward_name": "Town Close",
+      "local_authority": "Norwich",
+      "pop_0_4": 387,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012912",
+      "ward_name": "University (Norwich)",
+      "local_authority": "Norwich",
+      "pop_0_4": 479,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05012913",
+      "ward_name": "Wensum",
+      "local_authority": "Norwich",
+      "pop_0_4": 741,
+      "imd_decile": null,
+      "idaci_decile": null
+    }
+  ],
+  "providers": [],
+  "comparables": []
+}

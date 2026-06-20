@@ -1,0 +1,125 @@
+{
+  "_meta": {
+    "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
+    "local_authority": "Cambridge",
+    "provider_count": 0,
+    "geocoded_count": 0,
+    "ward_count": 14
+  },
+  "areas": [
+    {
+      "ward_code": "E05013050",
+      "ward_name": "Abbey (Cambridge)",
+      "local_authority": "Cambridge",
+      "pop_0_4": 533,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013051",
+      "ward_name": "Arbury (Cambridge)",
+      "local_authority": "Cambridge",
+      "pop_0_4": 589,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013052",
+      "ward_name": "Castle (Cambridge)",
+      "local_authority": "Cambridge",
+      "pop_0_4": 307,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013053",
+      "ward_name": "Cherry Hinton",
+      "local_authority": "Cambridge",
+      "pop_0_4": 551,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013054",
+      "ward_name": "Coleridge",
+      "local_authority": "Cambridge",
+      "pop_0_4": 389,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013055",
+      "ward_name": "East Chesterton",
+      "local_authority": "Cambridge",
+      "pop_0_4": 504,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013056",
+      "ward_name": "King's Hedges",
+      "local_authority": "Cambridge",
+      "pop_0_4": 646,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013057",
+      "ward_name": "Market",
+      "local_authority": "Cambridge",
+      "pop_0_4": 163,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013058",
+      "ward_name": "Newnham (Cambridge)",
+      "local_authority": "Cambridge",
+      "pop_0_4": 163,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013059",
+      "ward_name": "Petersfield",
+      "local_authority": "Cambridge",
+      "pop_0_4": 340,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013060",
+      "ward_name": "Queen Edith's",
+      "local_authority": "Cambridge",
+      "pop_0_4": 413,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013061",
+      "ward_name": "Romsey",
+      "local_authority": "Cambridge",
+      "pop_0_4": 452,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013062",
+      "ward_name": "Trumpington",
+      "local_authority": "Cambridge",
+      "pop_0_4": 1008,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013063",
+      "ward_name": "West Chesterton",
+      "local_authority": "Cambridge",
+      "pop_0_4": 281,
+      "imd_decile": null,
+      "idaci_decile": null
+    }
+  ],
+  "providers": [],
+  "comparables": []
+}

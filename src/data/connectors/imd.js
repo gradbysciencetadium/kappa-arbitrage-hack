@@ -96,8 +96,10 @@ function toDecile(raw) {
  * @returns {Promise<Object<string, {imd_decile: number, idaci_decile: number}>>}
  *          Map of lsoa_code -> { imd_decile, idaci_decile }, deciles 1-10 (1 = most deprived).
  */
+let _imdCache = null; // { url, map } — parse the national IMD CSV once per process
 async function fetchDeprivationByLsoa(opts = {}) {
   const url = opts.url || IMD2019_FILE7_CSV_URL;
+  if (_imdCache && _imdCache.url === url) return _imdCache.map;
   const res = await fetch(url, { signal: opts.signal });
   if (!res.ok) {
     throw new Error(
@@ -105,7 +107,9 @@ async function fetchDeprivationByLsoa(opts = {}) {
     );
   }
   const text = await res.text();
-  return parseDeprivationCsv(text);
+  const map = parseDeprivationCsv(text);
+  _imdCache = { url, map };
+  return map;
 }
 
 /**

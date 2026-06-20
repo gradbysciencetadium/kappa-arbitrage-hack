@@ -1,0 +1,205 @@
+{
+  "_meta": {
+    "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
+    "local_authority": "Oxford",
+    "provider_count": 0,
+    "geocoded_count": 0,
+    "ward_count": 24
+  },
+  "areas": [
+    {
+      "ward_code": "E05013096",
+      "ward_name": "Barton & Sandhills",
+      "local_authority": "Oxford",
+      "pop_0_4": 461,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013097",
+      "ward_name": "Blackbird Leys",
+      "local_authority": "Oxford",
+      "pop_0_4": 379,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013098",
+      "ward_name": "Carfax & Jericho",
+      "local_authority": "Oxford",
+      "pop_0_4": 87,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013099",
+      "ward_name": "Churchill (Oxford)",
+      "local_authority": "Oxford",
+      "pop_0_4": 353,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013100",
+      "ward_name": "Cowley",
+      "local_authority": "Oxford",
+      "pop_0_4": 510,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013101",
+      "ward_name": "Cutteslowe & Sunnymead",
+      "local_authority": "Oxford",
+      "pop_0_4": 272,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013102",
+      "ward_name": "Donnington (Oxford)",
+      "local_authority": "Oxford",
+      "pop_0_4": 348,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013103",
+      "ward_name": "Headington",
+      "local_authority": "Oxford",
+      "pop_0_4": 275,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013104",
+      "ward_name": "Headington Hill & Northway",
+      "local_authority": "Oxford",
+      "pop_0_4": 247,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013105",
+      "ward_name": "Hinksey Park",
+      "local_authority": "Oxford",
+      "pop_0_4": 216,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013106",
+      "ward_name": "Holywell (Oxford)",
+      "local_authority": "Oxford",
+      "pop_0_4": 21,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013107",
+      "ward_name": "Littlemore",
+      "local_authority": "Oxford",
+      "pop_0_4": 401,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013108",
+      "ward_name": "Lye Valley",
+      "local_authority": "Oxford",
+      "pop_0_4": 346,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013109",
+      "ward_name": "Marston",
+      "local_authority": "Oxford",
+      "pop_0_4": 371,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013110",
+      "ward_name": "Northfield Brook",
+      "local_authority": "Oxford",
+      "pop_0_4": 434,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013111",
+      "ward_name": "Osney & St Thomas",
+      "local_authority": "Oxford",
+      "pop_0_4": 318,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013112",
+      "ward_name": "Quarry & Risinghurst",
+      "local_authority": "Oxford",
+      "pop_0_4": 369,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013113",
+      "ward_name": "Rose Hill & Iffley",
+      "local_authority": "Oxford",
+      "pop_0_4": 416,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013114",
+      "ward_name": "St Clement's (Oxford)",
+      "local_authority": "Oxford",
+      "pop_0_4": 173,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013115",
+      "ward_name": "St Mary's (Oxford)",
+      "local_authority": "Oxford",
+      "pop_0_4": 194,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013116",
+      "ward_name": "Summertown",
+      "local_authority": "Oxford",
+      "pop_0_4": 162,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013117",
+      "ward_name": "Temple Cowley",
+      "local_authority": "Oxford",
+      "pop_0_4": 351,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013118",
+      "ward_name": "Walton Manor",
+      "local_authority": "Oxford",
+      "pop_0_4": 213,
+      "imd_decile": null,
+      "idaci_decile": null
+    },
+    {
+      "ward_code": "E05013119",
+      "ward_name": "Wolvercote",
+      "local_authority": "Oxford",
+      "pop_0_4": 215,
+      "imd_decile": null,
+      "idaci_decile": null
+    }
+  ],
+  "providers": [],
+  "comparables": []
+}

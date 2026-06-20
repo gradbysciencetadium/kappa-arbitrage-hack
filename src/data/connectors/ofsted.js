@@ -317,6 +317,18 @@ async function fetchCsvText(url) {
   return await res.text();
 }
 
+// Download + parse the national CSV ONCE per process (it's 18MB / ~70k rows), so batch
+// ingestion of many local authorities reuses the parsed rows instead of re-fetching.
+let _parsedCache = null; // { url, records, headerRow, idx }
+async function loadParsed(url) {
+  if (_parsedCache && _parsedCache.url === url) return _parsedCache;
+  const text = await fetchCsvText(url);
+  const records = splitCsvRecords(text);
+  const meta = records.length ? buildHeaderIndex(records) : { headerRow: 0, idx: {} };
+  _parsedCache = { url, records, headerRow: meta.headerRow, idx: meta.idx };
+  return _parsedCache;
+}
+
 /**
  * fetchProviders(localAuthority)
  * Download + parse the Ofsted "most recent inspections" management-information CSV and return an
@@ -328,11 +340,8 @@ async function fetchCsvText(url) {
  */
 async function fetchProviders(localAuthority) {
   const url = DEFAULT_CSV_URL;
-  const text = await fetchCsvText(url);
-  const records = splitCsvRecords(text);
+  const { records, headerRow, idx } = await loadParsed(url);
   if (!records.length) return [];
-
-  const { headerRow, idx } = buildHeaderIndex(records);
 
   const providers = [];
   for (let r = headerRow + 1; r < records.length; r++) {
