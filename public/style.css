@@ -996,3 +996,9 @@ html { scroll-behavior: smooth; }
   .account-email { max-width: 8ch; }
   .topbar-right { gap: 0.6rem; }
 }
+
+/* Grounding proof + coverage line on the report */
+.report-verify { font-family: var(--font-mono); font-size: 0.78rem; margin: 0.2rem 0 0.4rem; }
+.report-verify.ok { color: #38e8a0; }
+.report-verify.warn { color: #ffcf66; }
+.report-coverage { font-size: 0.8rem; color: var(--text-dim); margin: 0 0 0.6rem; }

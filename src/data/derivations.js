@@ -7,6 +7,15 @@ const store = require("./store");
 
 const GOOD_RATINGS = new Set(["Good", "Outstanding"]);
 
+// Group-based providers (nurseries) operate from "non-domestic premises" and carry a
+// postcode, so they geocode to a ward (~99.9% coverage). Childminders / home-based carers
+// have their addresses redacted by Ofsted (no postcode), so they CANNOT be placed in a
+// ward — ward-level supply therefore reflects group-based provision, and childminders are
+// surfaced separately at LA level. This split is what stops a ward looking like a
+// "childcare desert" purely because home-based carers aren't geocodable.
+const GROUP_RE = /non-domestic/i;
+const isGroupProvider = (p) => GROUP_RE.test(p.type || "");
+
 function round(n, dp = 2) {
   const f = Math.pow(10, dp);
   return Math.round((n + Number.EPSILON) * f) / f;
@@ -98,17 +107,66 @@ function competitiveQualityDensity(locationFocus, wardCode) {
       source: "Ofsted ratings by provider.",
     };
   }
-  const good = providers.filter((p) => GOOD_RATINGS.has(p.ofsted_rating)).length;
-  const share = round(good / providers.length, 2);
+  const rated = providers.filter((p) => p.ofsted_rating);
+  const good = rated.filter((p) => GOOD_RATINGS.has(p.ofsted_rating)).length;
+  const share = rated.length ? round(good / rated.length, 2) : null;
   return {
     metric: "competitive_quality_density",
     ward_code: wardCode,
     provider_count: providers.length,
+    rated_count: rated.length,
     good_or_outstanding: good,
     good_or_outstanding_share: share,
     interpretation:
-      share >= 0.75 ? "strong incumbents — differentiation needed" : share <= 0.4 ? "weak incumbents — quality gap to exploit" : "mixed",
+      share == null ? "incumbents unrated" : share >= 0.75 ? "strong incumbents — differentiation needed" : share <= 0.4 ? "weak incumbents — quality gap to exploit" : "mixed",
     source: "Ofsted ratings by provider.",
+  };
+}
+
+// Per-ward evidence confidence: how much group-based provision underpins this ward's
+// supply metrics. Few providers => the desert/gap signal is fragile, so we flag it.
+function wardConfidence(locationFocus, wardCode) {
+  const providers = store.getProvidersInWard(locationFocus, wardCode);
+  const n = providers.length;
+  const rated = providers.filter((p) => p.ofsted_rating).length;
+  const confidence = n >= 5 ? "high" : n >= 2 ? "medium" : "low";
+  const flags = [];
+  if (n === 0) flags.push("no_group_providers_in_ward");
+  else if (n < 2) flags.push("sparse_supply_evidence");
+  return { group_provider_count: n, rated_count: rated, confidence, flags };
+}
+
+// LA-level data coverage: what the ward metrics are (and aren't) built on. Makes the
+// childminder gap explicit instead of letting it silently undercount ward supply.
+function datasetCoverage(locationFocus) {
+  const providers = store.listProviders(locationFocus);
+  const total = providers.length;
+  const geocoded = providers.filter((p) => p.ward_code).length;
+  const group = providers.filter(isGroupProvider);
+  const groupGeo = group.filter((p) => p.ward_code).length;
+  const childminders = providers.filter((p) => !isGroupProvider(p));
+  const cmPlaces = childminders.reduce((s, p) => s + (p.registered_places || 0), 0);
+  return {
+    total_providers: total,
+    geocoded,
+    geocoded_pct: total ? round((geocoded / total) * 100, 1) : null,
+    group_based: {
+      total: group.length,
+      geocoded: groupGeo,
+      geocoded_pct: group.length ? round((groupGeo / group.length) * 100, 1) : null,
+      ward_level: true,
+    },
+    childminders: {
+      count: childminders.length,
+      registered_places: cmPlaces,
+      ward_attributable: false,
+    },
+    note:
+      "Ward-level metrics reflect group-based (nursery) provision, which is ~100% geocoded. " +
+      childminders.length +
+      " childminders/home-based carers add LA-wide capacity (" +
+      cmPlaces +
+      " places) that Ofsted does not geolocate, so they are not allocated to wards.",
   };
 }
 
@@ -122,6 +180,7 @@ function wardMetrics(locationFocus, wardCode) {
     childcare_desert_index: childcareDesertIndex(locationFocus, wardCode),
     deprivation_adjusted_demand: deprivationAdjustedDemand(locationFocus, wardCode),
     competitive_quality_density: competitiveQualityDensity(locationFocus, wardCode),
+    coverage: wardConfidence(locationFocus, wardCode),
   };
 }
 
@@ -135,7 +194,15 @@ function rankWards(locationFocus) {
     const demand = m.deprivation_adjusted_demand ? m.deprivation_adjusted_demand.adjusted_demand : 0;
     // opportunity rises with under-supply (negative gap), higher children-per-place, higher adjusted demand
     const opportunity_score = round(-gap * 0.5 + desert * 8 + demand / 100, 1);
-    return { ...m, opportunity_score };
+    // Flag a fragile "opportunity" that rests on thin supply evidence (e.g. a ward that
+    // looks like a desert only because it has 0-1 geocoded group providers).
+    const cov = m.coverage || {};
+    const flags = [...(cov.flags || [])];
+    const desertish =
+      (m.childcare_desert_index && m.childcare_desert_index.classification === "childcare desert") ||
+      (m.supply_demand_gap && m.supply_demand_gap.interpretation === "under-supplied");
+    if (desertish && cov.confidence === "low") flags.push("low_confidence_opportunity_signal");
+    return { ...m, opportunity_score, confidence: cov.confidence || "low", flags };
   });
   return scored.sort((x, y) => y.opportunity_score - x.opportunity_score);
 }
@@ -148,6 +215,9 @@ module.exports = {
   childcareDesertIndex,
   deprivationAdjustedDemand,
   competitiveQualityDensity,
+  wardConfidence,
+  datasetCoverage,
+  isGroupProvider,
   wardMetrics,
   rankWards,
 };

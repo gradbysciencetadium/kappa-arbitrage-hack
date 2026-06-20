@@ -318,6 +318,30 @@ function renderReport(report, meta) {
     parts.push(`<p class="report-confidence">Confidence: ${Math.round(report.confidence * 100)}%</p>`);
   }
 
+  // Deterministic grounding proof + data coverage (from Bara's verifier).
+  if (meta && meta.verification) {
+    const v = meta.verification;
+    const unknown = (v.ward_check && v.ward_check.unknown) || [];
+    if (v.grounded) {
+      parts.push(`<p class="report-verify ok">✓ Grounding verified — ${v.numbers_checked} figures traced to source data, every recommended ward exists.</p>`);
+    } else {
+      parts.push(
+        `<p class="report-verify warn">⚠ Grounding check: ${v.ungrounded_numbers.length} figure(s) untraceable` +
+          (unknown.length ? `, ${unknown.length} unknown ward(s)` : "") +
+          ` — confidence reduced.</p>`
+      );
+    }
+  }
+  if (meta && meta.coverage && meta.coverage.group_based) {
+    const c = meta.coverage;
+    parts.push(
+      `<p class="report-coverage">Data coverage: ${c.group_based.geocoded}/${c.group_based.total} nurseries mapped to wards ` +
+        `(${c.group_based.geocoded_pct}%)` +
+        (c.childminders ? `; ${c.childminders.count} childminders counted LA-wide (no ward-level address).` : ".") +
+        `</p>`
+    );
+  }
+
   parts.push(`<h3>Executive summary</h3><p>${esc(report.executive_summary)}</p>`);
   parts.push(`<h3>Strategic question</h3><p>${esc(report.strategic_question)}</p>`);
 

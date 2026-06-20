@@ -11,6 +11,11 @@ const workers = require("./workers");
 const validate = require("./validate");
 const synthesis = require("./synthesis");
 const judge = require("./judge");
+const verifier = require("./verifier");
+
+function round2(n) {
+  return Math.round((n + Number.EPSILON) * 100) / 100;
+}
 
 const DEFAULT_DIMENSIONS = [
   "supply-demand gap",
@@ -83,6 +88,7 @@ async function runBara(brief, { onProgress = () => {} } = {}) {
   // 3. Compute metrics deterministically (the factual substrate)
   onProgress("computing metrics from the data");
   const rankedWards = derivations.rankWards(location);
+  const coverage = derivations.datasetCoverage(location);
 
   // 4. Workers interpret the metrics into grounded findings. Default = one combined
   //    call (free-tier friendly). Set WORKER_FANOUT=1 (with a fast provider) to fan out.
@@ -98,7 +104,7 @@ async function runBara(brief, { onProgress = () => {} } = {}) {
 
   // 6. Synthesis
   onProgress("writing the report");
-  let report = await synthesis.synthesize({ brief, rankedWards, workerFindings, validation, dataCaveat });
+  let report = await synthesis.synthesize({ brief, rankedWards, workerFindings, validation, dataCaveat, coverage });
 
   // 7. Judge + one reflexion revise if weak
   onProgress("reviewing the report for soundness");
@@ -115,9 +121,21 @@ async function runBara(brief, { onProgress = () => {} } = {}) {
         workerFindings,
         validation,
         dataCaveat,
+        coverage,
       });
     }
   } catch (_) {}
+
+  // 8. Deterministic citation verification — prove every number/ward traces to the
+  //    substrate. Fabricated figures or invented wards lower confidence + are disclosed.
+  onProgress("verifying every figure against the data");
+  const verification = verifier.verify({ report, rankedWards, validation, coverage, brief });
+  if (!verification.grounded) {
+    if (typeof report.confidence === "number") {
+      report.confidence = Math.max(0, round2(report.confidence - verification.confidence_penalty));
+    }
+    report.caveats = (report.caveats ? report.caveats + " " : "") + verification.note;
+  }
 
   onProgress("done");
   return {
@@ -129,6 +147,8 @@ async function runBara(brief, { onProgress = () => {} } = {}) {
       dataSource: meta.source || null,
       dimensions: activeDimensions,
       validation,
+      coverage,
+      verification,
       judge: verdict,
     },
   };

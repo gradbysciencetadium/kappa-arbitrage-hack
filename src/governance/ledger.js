@@ -38,6 +38,25 @@ function buildPayload({ reportId, conversationId, brief, report, meta }) {
     computations: (meta && meta.dimensions) || [],
     data_provenance: (meta && meta.dataSource) || null,
     is_fixture: !!(meta && meta.isFixture),
+    // Deterministic grounding proof: every figure/ward in the report was checked
+    // against the computed substrate (src/bara/verifier.js).
+    grounding:
+      meta && meta.verification
+        ? {
+            grounded: meta.verification.grounded,
+            numbers_checked: meta.verification.numbers_checked,
+            ungrounded_count: (meta.verification.ungrounded_numbers || []).length,
+            unknown_wards: (meta.verification.ward_check && meta.verification.ward_check.unknown) || [],
+          }
+        : null,
+    coverage:
+      meta && meta.coverage
+        ? {
+            total_providers: meta.coverage.total_providers,
+            group_based_geocoded_pct: meta.coverage.group_based && meta.coverage.group_based.geocoded_pct,
+            childminders_unallocated: meta.coverage.childminders && meta.coverage.childminders.count,
+          }
+        : null,
     prediction: {
       top_recommendation: topRec ? topRec.ward_name : null,
       confidence: report.confidence != null ? report.confidence : null,

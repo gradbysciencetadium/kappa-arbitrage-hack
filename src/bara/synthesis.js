@@ -10,18 +10,22 @@ that answers the client's strategic question using ONLY the provided computed me
 findings, and validation cross-check.
 STRICT RULES:
 - Every quantitative claim must trace to the provided computed metrics. Never invent figures.
+- Only recommend wards that appear in computed_ranked_wards (use their exact ward_name). Never name a ward that is not in the data.
 - Rank recommended locations using the provided opportunity scores and metrics.
+- Respect each ward's "confidence" and "flags": do NOT present a low-confidence / sparse-evidence ward as a strong opportunity without flagging that its signal rests on few providers.
+- Use data_coverage: ward metrics reflect group-based (nursery) provision; childminders add LA-wide capacity not allocated to wards. State this in the caveats and don't claim a "childcare desert" without acknowledging unallocated childminder capacity.
 - Be specific and implementable; no generic advice.
 - Acknowledge uncertainty and the data caveats you are given.
-- Set "confidence" (0-1) based on data completeness.
+- Set "confidence" (0-1) based on data completeness AND the coverage/confidence signals.
 Return JSON only, matching the required schema.`;
 
-async function synthesize({ brief, rankedWards, workerFindings, validation, dataCaveat }) {
+async function synthesize({ brief, rankedWards, workerFindings, validation, dataCaveat, coverage }) {
   const payload = {
     brief,
     computed_ranked_wards: rankedWards,
     worker_findings: workerFindings,
     validation_cross_check: validation,
+    data_coverage: coverage,
     data_caveat: dataCaveat,
   };
   return callModel({
@@ -42,8 +46,8 @@ async function synthesize({ brief, rankedWards, workerFindings, validation, data
 }
 
 // Reflexion revise pass driven by the judge's weaknesses.
-async function revise({ brief, report, weaknesses, rankedWards, workerFindings, validation, dataCaveat }) {
-  const payload = { brief, computed_ranked_wards: rankedWards, worker_findings: workerFindings, validation_cross_check: validation, data_caveat: dataCaveat };
+async function revise({ brief, report, weaknesses, rankedWards, workerFindings, validation, dataCaveat, coverage }) {
+  const payload = { brief, computed_ranked_wards: rankedWards, worker_findings: workerFindings, validation_cross_check: validation, data_coverage: coverage, data_caveat: dataCaveat };
   return callModel({
     role: "SYNTH",
     system: SYSTEM,
