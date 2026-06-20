@@ -1002,3 +1002,16 @@ html { scroll-behavior: smooth; }
 .report-verify.ok { color: #38e8a0; }
 .report-verify.warn { color: #ffcf66; }
 .report-coverage { font-size: 0.8rem; color: var(--text-dim); margin: 0 0 0.6rem; }
+
+/* Ledger trust panel (governance page) */
+.gov-trust { margin: 1.5rem 0 2rem; padding: 1.2rem 1.4rem; border: 1px solid var(--glass-border); border-radius: 14px; background: rgba(255,255,255,0.03); }
+.gov-trust h2 { margin-bottom: 0.6rem; }
+.gov-proves { list-style: none; margin: 0 0 0.6rem; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; }
+.gov-proves li { font-size: 0.86rem; line-height: 1.5; padding-left: 1.4rem; position: relative; color: var(--text-dim); }.gov-proves li.ok::before { content: "✓"; position: absolute; left: 0; color: #38e8a0; }
+.gov-proves li.dim::before { content: "•"; position: absolute; left: 0.3rem; color: var(--text-dim); }
+.gov-anchor { margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); }
+.gov-anchor a { color: var(--accent-2); }
+.gov-warn { color: #ffcf66 !important; }
+.gov-badge.sig { background: rgba(56,232,160,0.16); color: #38e8a0; }
+.gov-badge.warn { background: rgba(255,207,102,0.16); color: #ffcf66; }
+.gov-verify #btn-anchor { }

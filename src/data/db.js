@@ -69,6 +69,7 @@ const mem = {
   reports: new Map(), // id -> report row
   leads: [],
   ledger: [], // audit-ledger records (append-only)
+  anchors: [], // external-anchor receipts
 };
 
 /* ------------------------------------------------------------------ *
@@ -326,9 +327,15 @@ async function getLastLedgerHash() {
 }
 
 async function appendLedger(entry) {
-  // entry: { report_id, prev_hash, hash, payload }
+  // entry: { report_id, prev_hash, hash, payload, signature, signer, signer_pubkey }
   if (usingSupabase()) {
-    await supabase.from("audit_ledger").insert(entry);
+    const { error } = await supabase.from("audit_ledger").insert(entry);
+    if (error) {
+      // Signature columns may not exist yet — fall back to base columns so the chain
+      // still records (run the updated supabase/schema.sql to store signatures).
+      const { report_id, prev_hash, hash, payload } = entry;
+      await supabase.from("audit_ledger").insert({ report_id, prev_hash, hash, payload });
+    }
   } else {
     mem.ledger.push({ id: crypto.randomUUID(), ...entry, created_at: new Date().toISOString() });
   }
@@ -343,6 +350,32 @@ async function getLedger() {
     return data || [];
   }
   return mem.ledger.slice();
+}
+
+// External-anchor receipts (signed proofs over the chain head, publishable off-server).
+async function saveAnchor(anchor) {
+  if (usingSupabase()) {
+    const { error } = await supabase
+      .from("audit_anchors")
+      .insert({ head: anchor.head, count: anchor.count, receipt: anchor });
+    if (error) return false; // table may not exist yet
+    return true;
+  }
+  mem.anchors.push({ ...anchor });
+  return true;
+}
+
+async function getLatestAnchor() {
+  if (usingSupabase()) {
+    const { data } = await supabase
+      .from("audit_anchors")
+      .select("receipt")
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    return data ? data.receipt : null;
+  }
+  return mem.anchors.length ? mem.anchors[mem.anchors.length - 1] : null;
 }
 
 module.exports = {
@@ -366,4 +399,6 @@ module.exports = {
   getLastLedgerHash,
   appendLedger,
   getLedger,
+  saveAnchor,
+  getLatestAnchor,
 };

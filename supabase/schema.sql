@@ -63,6 +63,22 @@ create table if not exists audit_ledger (
   created_at  timestamptz not null default now()
 );
 create index if not exists audit_ledger_created_idx on audit_ledger(created_at);
+-- Ed25519 authorship signatures (added with the signed-ledger upgrade).
+alter table audit_ledger add column if not exists signature text;
+alter table audit_ledger add column if not exists signer text;
+alter table audit_ledger add column if not exists signer_pubkey text;
+
+-- External-anchor receipts: signed proofs over the chain head, published off-server so
+-- the ledger is tamper-evident to outsiders, not just to the operator.
+create table if not exists audit_anchors (
+  id          uuid primary key default gen_random_uuid(),
+  head        text,
+  count       integer,
+  receipt     jsonb not null,
+  external_proof text,
+  created_at  timestamptz not null default now()
+);
+create index if not exists audit_anchors_created_idx on audit_anchors(created_at);
 
 -- Realtime: let the frontend subscribe to live report progress.
 -- Idempotent: only add the table if it isn't already in the publication, so this

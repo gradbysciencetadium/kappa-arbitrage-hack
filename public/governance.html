@@ -23,10 +23,11 @@
     <section class="gov-head">
       <h1>AI Accountability Ledger</h1>
       <p>
-        Every Kappa analysis is recorded as a <strong>tamper-evident, hash-chained</strong> audit
-        entry — the question, the public data sources, the deterministic computations, the model
-        used, the prediction, and the predicted-vs-actual outcome. Transparent, auditable,
-        accountable AI, on sovereign infrastructure.
+        Every Kappa analysis is recorded as a <strong>tamper-evident, hash-chained, Ed25519-signed</strong>
+        audit entry — the question, the public data sources, the deterministic computations, the model
+        used (and a hash of its output), the prediction, and a code-checked grounding proof. The public
+        key and a standalone verifier let anyone confirm the chain independently. Inference runs on
+        FLock sovereign infrastructure when sovereign mode is enabled (see the card below).
       </p>
     </section>
 

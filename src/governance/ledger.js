@@ -21,6 +21,58 @@ function sortKeys(v) {
 const canonical = (obj) => JSON.stringify(sortKeys(obj));
 const sha256 = (s) => crypto.createHash("sha256").update(s).digest("hex");
 
+/* ------------------------------------------------------------------ *
+ * Ed25519 signing — binds WHO wrote each record. The private key comes
+ * from env LEDGER_SIGNING_KEY (base64 PKCS8); otherwise an ephemeral key
+ * is generated and its public key is logged so it can be pinned. The
+ * public key is published at /api/ledger/pubkey for independent verifiers.
+ * ------------------------------------------------------------------ */
+let _keys = null;
+function keys() {
+  if (_keys) return _keys;
+  const env = process.env.LEDGER_SIGNING_KEY;
+  if (env) {
+    try {
+      const priv = crypto.createPrivateKey({ key: Buffer.from(env, "base64"), format: "der", type: "pkcs8" });
+      _keys = { priv, pub: crypto.createPublicKey(priv), ephemeral: false };
+    } catch (e) {
+      console.warn("Ledger: invalid LEDGER_SIGNING_KEY, generating an ephemeral key:", e.message);
+    }
+  }
+  if (!_keys) {
+    const { privateKey, publicKey } = crypto.generateKeyPairSync("ed25519");
+    _keys = { priv: privateKey, pub: publicKey, ephemeral: true };
+    console.warn(
+      "Ledger: using an EPHEMERAL signing key (set LEDGER_SIGNING_KEY to persist authorship across restarts).\n" +
+        "  public key: " + publicKeyB64() + "\n" +
+        "  signer id : " + signerId()
+    );
+  }
+  return _keys;
+}
+function publicKeyB64() {
+  return keys().pub.export({ format: "der", type: "spki" }).toString("base64");
+}
+function signerId() {
+  return sha256(publicKeyB64()).slice(0, 16); // short fingerprint
+}
+function sign(hashHex) {
+  return crypto.sign(null, Buffer.from(hashHex, "hex"), keys().priv).toString("base64");
+}
+function verifySignature(hashHex, signatureB64, pubKeyB64) {
+  try {
+    const pub = pubKeyB64
+      ? crypto.createPublicKey({ key: Buffer.from(pubKeyB64, "base64"), format: "der", type: "spki" })
+      : keys().pub;
+    return crypto.verify(null, Buffer.from(hashHex, "hex"), pub, Buffer.from(signatureB64, "base64"));
+  } catch {
+    return false;
+  }
+}
+function keyInfo() {
+  return { algorithm: "ed25519", public_key: publicKeyB64(), signer: signerId(), ephemeral: keys().ephemeral };
+}
+
 // Build the audit payload for one finished analysis.
 function buildPayload({ reportId, conversationId, brief, report, meta }) {
   const synth = resolveRole("SYNTH");
@@ -33,6 +85,9 @@ function buildPayload({ reportId, conversationId, brief, report, meta }) {
       provider: synth.provider,
       id: synth.model,
       sovereign: synth.provider === "flock",
+      // Binds the record to the model's actual output (the synthesised report), so a
+      // third party can confirm this provider produced this exact analysis.
+      output_sha256: sha256(canonical(report)),
     },
     data_sources: report.data_sources || [],
     computations: (meta && meta.dimensions) || [],
@@ -63,6 +118,10 @@ function buildPayload({ reportId, conversationId, brief, report, meta }) {
     },
     validation: (meta && meta.validation) || null,
     inputs_hash: sha256(canonical(brief)),
+    // WHEN and WHO — inside the hash, so the chain proves the record's time and author,
+    // not just its relative order. Backs the "logged before the outcome is known" claim.
+    created_at: new Date().toISOString(),
+    signer: signerId(),
   };
 }
 
@@ -71,17 +130,56 @@ function hashRecord(prevHash, payload) {
   return sha256((prevHash || "GENESIS") + canonical(payload));
 }
 
-// Recompute the whole chain to prove integrity (no record altered or inserted).
-function verifyChain(records) {
+// Build a complete, signed record ready to append.
+function makeRecord(args, prevHash) {
+  const payload = buildPayload(args);
+  const hash = hashRecord(prevHash, payload);
+  return {
+    report_id: args.reportId,
+    prev_hash: prevHash || null,
+    hash,
+    payload,
+    signature: sign(hash),
+    signer: signerId(),
+    signer_pubkey: publicKeyB64(),
+  };
+}
+
+// Recompute the whole chain to prove integrity (no record altered, inserted or reordered),
+// AND verify each record's Ed25519 signature (proves authorship). Records written before
+// signing existed have no signature and are integrity-checked only.
+function verifyChain(records, opts = {}) {
   let prev = null;
+  let signed = 0;
   for (const r of records) {
     const expected = hashRecord(r.prev_hash, r.payload);
     if (r.prev_hash !== prev || r.hash !== expected) {
-      return { intact: false, broken_at: r.report_id || r.id || null, count: records.length };
+      return { intact: false, broken_at: r.report_id || r.id || null, reason: "hash", count: records.length };
+    }
+    if (r.signature) {
+      if (!verifySignature(r.hash, r.signature, r.signer_pubkey || opts.pubkey)) {
+        return { intact: false, broken_at: r.report_id || r.id || null, reason: "signature", count: records.length };
+      }
+      signed++;
     }
     prev = r.hash;
   }
-  return { intact: true, count: records.length, head: prev };
+  return { intact: true, count: records.length, head: prev, signed };
+}
+
+// Build a signed "anchor receipt" over the current chain head — a portable proof you can
+// publish anywhere EXTERNAL (a public git commit, a gist, a timestamp authority), turning
+// the self-custodied chain into one anyone can independently witness.
+function buildAnchor(head, count) {
+  const body = { head: head || "GENESIS", count: count || 0, created_at: new Date().toISOString(), signer: signerId() };
+  const digest = sha256(canonical(body));
+  return { ...body, digest, signature: sign(digest), signer_pubkey: publicKeyB64(), algorithm: "ed25519" };
+}
+function verifyAnchor(anchor) {
+  if (!anchor) return false;
+  const { signature, signer_pubkey, digest, algorithm, ...body } = anchor;
+  if (sha256(canonical(body)) !== digest) return false;
+  return verifySignature(digest, signature, signer_pubkey);
 }
 
 // Directional accuracy across any records that carry a resolved validation outcome.
@@ -93,4 +191,18 @@ function accuracyFromRecords(records) {
   return { validated: withVal.length, agreements: agree };
 }
 
-module.exports = { buildPayload, hashRecord, verifyChain, accuracyFromRecords, canonical, sha256 };
+module.exports = {
+  buildPayload,
+  hashRecord,
+  makeRecord,
+  verifyChain,
+  verifySignature,
+  accuracyFromRecords,
+  buildAnchor,
+  verifyAnchor,
+  keyInfo,
+  publicKeyB64,
+  signerId,
+  canonical,
+  sha256,
+};

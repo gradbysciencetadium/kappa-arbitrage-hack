@@ -21,6 +21,28 @@ async function authUser(req) {
   return auth.verifyToken(m[1].trim());
 }
 
+// Optionally publish an anchor receipt to a PUBLIC GitHub repo (set GITHUB_ANCHOR_REPO=
+// "owner/name" + GITHUB_ANCHOR_TOKEN). The repo's git history is an externally-hosted,
+// append-only witness of the chain head — verifiable without trusting our server.
+async function publishAnchorToGitHub(anchor) {
+  const repo = process.env.GITHUB_ANCHOR_REPO;
+  const token = process.env.GITHUB_ANCHOR_TOKEN;
+  const path = `ledger-anchors/anchor-${anchor.count}-${String(anchor.head).slice(0, 12)}.json`;
+  const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+  const body = {
+    message: `ledger anchor #${anchor.count} (head ${String(anchor.head).slice(0, 12)})`,
+    content: Buffer.from(JSON.stringify(anchor, null, 2)).toString("base64"),
+  };
+  const r = await fetch(url, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json", "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.message || `GitHub ${r.status}`);
+  return d.commit && d.commit.html_url;
+}
+
 function createApp() {
   const app = express();
   app.use(express.json({ limit: "1mb" }));
@@ -137,10 +159,9 @@ function createApp() {
         .then(async ({ report, meta }) => {
           await db.finishReport(reportId, report, meta);
           try {
-            const payload = ledger.buildPayload({ reportId, conversationId, brief, report, meta });
             const prev = await db.getLastLedgerHash();
-            const hash = ledger.hashRecord(prev, payload);
-            await db.appendLedger({ report_id: reportId, prev_hash: prev, hash, payload });
+            const record = ledger.makeRecord({ reportId, conversationId, brief, report, meta }, prev);
+            await db.appendLedger(record); // signed, timestamped, hash-chained
           } catch (e) {
             console.warn("Ledger append failed:", e.message);
           }
@@ -171,29 +192,82 @@ function createApp() {
     try {
       const records = await db.getLedger();
       const seedCases = validationSeed.cases || [];
-      const live = ledger.accuracyFromRecords(records);
       const seedAgree = seedCases.filter((c) => c.agreement === "agrees").length;
-      const validated = seedCases.length + live.validated;
-      const agreements = seedAgree + live.agreements;
+      const live = ledger.accuracyFromRecords(records);
       const synth = require("./llm/models.config").resolveRole("SYNTH");
+      const sovereign = synth.provider === "flock";
+      const anchor = await db.getLatestAnchor();
+      const integrity = ledger.verifyChain(records);
+
       res.json({
-        integrity: ledger.verifyChain(records), // recomputes the hash chain
+        integrity, // recomputes the hash chain AND verifies signatures
         analyses: records.length,
         records,
+        signing: ledger.keyInfo(), // ed25519 public key + signer fingerprint
+        anchor: anchor ? { ...anchor, verified: ledger.verifyAnchor(anchor) } : null,
+        // Seed (illustrative) accuracy is kept STRICTLY separate from live, verified
+        // accuracy — the seed cases are hand-authored for the demo, not a track record.
         backtest: {
-          note: validationSeed._meta && validationSeed._meta.what,
-          cases: seedCases,
-          validated,
-          agreements,
-          directional_accuracy_pct: validated ? Math.round((agreements / validated) * 100) : null,
+          seed_demo: {
+            disclaimer: "Illustrative hand-authored cases for demonstration — NOT a live track record.",
+            note: validationSeed._meta && validationSeed._meta.what,
+            cases: seedCases,
+            validated: seedCases.length,
+            agreements: seedAgree,
+            accuracy_pct: seedCases.length ? Math.round((seedAgree / seedCases.length) * 100) : null,
+          },
+          live: {
+            note: "Out-of-sample predictions resolved against real outcomes (none yet until openings resolve).",
+            validated: live.validated,
+            agreements: live.agreements,
+            accuracy_pct: live.validated ? Math.round((live.agreements / live.validated) * 100) : null,
+          },
         },
         sovereign: {
           provider: synth.provider,
           model: synth.model,
-          active: synth.provider === "flock",
-          note: "Inference routed through FLock's sovereign-aligned model when SOVEREIGN_AI=1.",
+          active: sovereign,
+          note: sovereign
+            ? "Inference is routed through FLock's sovereign-aligned model; each record binds a SHA-256 of the model's output."
+            : `Inference provider is "${synth.provider}". Set SOVEREIGN_AI=1 with a FLock key to route through FLock sovereign inference.`,
         },
+        what_this_proves: [
+          "Integrity: re-hashing the chain detects any edit, insertion or reordering of records.",
+          "Authorship & time: each record is Ed25519-signed and carries a signed timestamp inside the hash.",
+          "Grounding: every figure in each report was checked against the deterministic substrate before logging.",
+        ],
+        what_this_does_not_prove: [
+          "It does not prove the analysis is correct — only that the record is intact and authentic.",
+          anchor
+            ? "Anchored externally, so outsiders can witness the chain head independently."
+            : "Until the head hash is anchored externally (POST /api/ledger/anchor), integrity is only verifiable by parties who trust this server.",
+        ],
       });
+    } catch (err) {
+      res.status(502).json({ error: err.message });
+    }
+  });
+
+  // Public signing key — lets anyone independently verify record signatures.
+  app.get("/api/ledger/pubkey", (req, res) => res.json(ledger.keyInfo()));
+
+  // Anchor the current chain head externally: build a signed, portable receipt (and
+  // optionally publish it to a public GitHub repo) so the ledger becomes tamper-evident
+  // to outsiders, not just to the operator.
+  app.post("/api/ledger/anchor", async (req, res) => {
+    try {
+      const records = await db.getLedger();
+      const integrity = ledger.verifyChain(records);
+      const anchor = ledger.buildAnchor(integrity.head, records.length);
+      if (process.env.GITHUB_ANCHOR_TOKEN && process.env.GITHUB_ANCHOR_REPO) {
+        try {
+          anchor.external_proof = await publishAnchorToGitHub(anchor);
+        } catch (e) {
+          console.warn("Anchor publish failed:", e.message);
+        }
+      }
+      await db.saveAnchor(anchor);
+      res.json({ ok: true, anchor, verified: ledger.verifyAnchor(anchor) });
     } catch (err) {
       res.status(502).json({ error: err.message });
     }
