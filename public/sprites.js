@@ -95,9 +95,9 @@
     const loop = () => {
       el.innerHTML = svgFor(def, def.blink, scale);
       restoreTimer = setTimeout(() => { el.innerHTML = svgFor(def, def.idle, scale); }, 130);
-      blinkTimer = setTimeout(loop, 2400 + Math.floor((el.dataset.seed || 0.5 + name.length) % 3) * 900 + 1600);
+      blinkTimer = setTimeout(loop, 2600 + Math.random() * 2400); // staggered, natural blinks
     };
-    blinkTimer = setTimeout(loop, 2200 + name.length * 300);
+    blinkTimer = setTimeout(loop, 1800 + Math.random() * 1600);
 
     el._kbStop = () => { clearTimeout(blinkTimer); clearTimeout(restoreTimer); };
     return el;

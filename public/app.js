@@ -7,6 +7,7 @@ const chatText = document.getElementById("chat-text");
 const sendBtn = document.getElementById("send-btn");
 const resetBtn = document.getElementById("reset-btn");
 const chatStatus = document.getElementById("chat-status");
+const brandHome = document.getElementById("brand-home");
 
 let conversationId = null;
 let busy = false;
@@ -16,12 +17,51 @@ const WELCOME =
   "decision you're facing, then deliver a data-backed consulting report.\n\n" +
   "To begin: what does your business do, and what question is on your mind?";
 
-startBtn.addEventListener("click", () => {
+// --- View navigation (hero <-> consultation). Logo = home; browser back works too. ---
+function showChat() {
   hero.hidden = true;
   chatSection.hidden = false;
   if (!chatWindow.childElementCount) addAgentMessage(WELCOME);
   chatText.focus();
+}
+function showHome() {
+  chatSection.hidden = true;
+  hero.hidden = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+startBtn.addEventListener("click", () => {
+  showChat();
+  if (location.hash !== "#consultation") history.pushState({ view: "chat" }, "", "#consultation");
 });
+
+// Browser back / forward
+window.addEventListener("popstate", () => {
+  if (location.hash === "#consultation") showChat();
+  else showHome();
+});
+
+// Logo returns to home (and keeps the URL/history consistent).
+if (brandHome) {
+  const goHome = (e) => {
+    if (e) e.preventDefault();
+    if (chatSection.hidden) return; // already home
+    showHome();
+    if (location.hash === "#consultation") history.replaceState({ view: "home" }, "", location.pathname);
+  };
+  brandHome.addEventListener("click", goHome);
+  brandHome.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goHome(); }
+  });
+}
+
+// Deep-link support: arriving with #consultation seeds a home history entry, then opens
+// the chat — so BOTH the logo and the browser back button return home from any entry path.
+if (location.hash === "#consultation") {
+  history.replaceState({ view: "home" }, "", location.pathname);
+  history.pushState({ view: "chat" }, "", "#consultation");
+  showChat();
+}
 
 resetBtn.addEventListener("click", () => {
   if (busy) return;
@@ -190,7 +230,7 @@ function addLeadForm() {
     "<p>We select a few businesses each month for a free, in-depth project. Leave your email to apply.</p>" +
     "<form class='lead-row'><input type='email' placeholder='you@business.com' aria-label='Your email address' autocomplete='email' required />" +
     "<button type='submit'>Apply</button></form>" +
-    "<div class='lead-msg'></div>";
+    "<div class='lead-msg' aria-live='polite'></div>";
   chatWindow.appendChild(div);
   scrollDown();
   const form = div.querySelector("form");

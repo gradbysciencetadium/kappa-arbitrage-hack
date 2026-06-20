@@ -652,6 +652,42 @@ html { scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) { .ksprite-host svg { animation: none !important; } }
 
+/* ---------- Pixel/retro components (site-wide) ---------- */
+/* Clickable logo = home */
+.brand { cursor: pointer; user-select: none; }
+.brand:hover .brand-name { color: var(--accent-2); }
+.brand:hover .brand-mark { box-shadow: 0 0 14px var(--accent-2), 0 4px 18px rgba(90, 169, 255, 0.5); }
+
+/* Tactile retro buttons: blocky, pixel drop-shadow, press-down on click. */
+.cta, .chat-input button, .lead-row button, .gov-verify button:not(.ghost) {
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 0 rgba(18, 46, 102, 0.95), 0 0 16px rgba(90, 169, 255, 0.35);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+}
+.cta:active, .chat-input button:active, .lead-row button:active, .gov-verify button:not(.ghost):active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(18, 46, 102, 0.95), 0 0 10px rgba(90, 169, 255, 0.3);
+}
+.reset-btn, .topbar-link, .gov-back, .gov-verify button.ghost { font-family: var(--font-mono); border-radius: 6px; }
+
+/* Pixel font on short structural headings/labels (kept legible). */
+.chat-header h2 { font-family: "Press Start 2P", "Space Grotesk", sans-serif; font-size: 0.7rem; line-height: 1.5; }
+.step h3 { font-family: "Press Start 2P", "Space Grotesk", sans-serif; font-size: 0.58rem; line-height: 1.6; margin-bottom: 0.7rem; }
+.gov-badge, .report-badge { font-family: "Press Start 2P", var(--font-mono); }
+
+/* Step character sprites */
+.step-sprite { margin-bottom: 0.7rem; }
+.step-sprite svg { width: 48px; height: 48px; }
+
+/* Step 3 keeps a pixel number badge */
+.step-num {
+  font-family: "Press Start 2P", "Space Grotesk", sans-serif;
+  font-size: 0.7rem; border-radius: 6px;
+  box-shadow: 0 3px 0 rgba(18, 46, 102, 0.9);
+}
+
 .report-head {
   display: flex;
   flex-wrap: wrap;

@@ -40,18 +40,6 @@ const short = (h) => (h ? esc(h).slice(0, 12) + "…" : "—");
       ),
     ].join("");
 
-    // --- live verify + tamper demo (the money shot) ---
-    summary.insertAdjacentHTML(
-      "beforeend",
-      `<div class="gov-verify">
-        <button id="btn-verify">Verify chain</button>
-        <button id="btn-tamper" class="ghost">Simulate tamper</button>
-        <span id="verify-result" class="verify-result"></span>
-      </div>`
-    );
-    document.getElementById("btn-verify").addEventListener("click", () => runVerify(false));
-    document.getElementById("btn-tamper").addEventListener("click", () => runVerify(true));
-
     // --- backtest library ---
     const rows = (d.backtest.cases || [])
       .map(
@@ -100,6 +88,19 @@ const short = (h) => (h ? esc(h).slice(0, 12) + "…" : "—");
     }
   } catch (e) {
     summary.innerHTML = `<div class="gov-err">${esc(e.message)}</div>`;
+  } finally {
+    // Verify/tamper controls always render, even if the ledger fetch failed — they call
+    // the independent /api/ledger/verify endpoint and must never be a dead end.
+    summary.insertAdjacentHTML(
+      "beforeend",
+      `<div class="gov-verify">
+        <button id="btn-verify">Verify chain</button>
+        <button id="btn-tamper" class="ghost">Simulate tamper</button>
+        <span id="verify-result" class="verify-result" aria-live="polite"></span>
+      </div>`
+    );
+    document.getElementById("btn-verify").addEventListener("click", () => runVerify(false));
+    document.getElementById("btn-tamper").addEventListener("click", () => runVerify(true));
   }
 })();
 
