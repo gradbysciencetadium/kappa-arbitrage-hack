@@ -622,6 +622,36 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { .hero-flow span { animation: none !important; } }
 @media (max-width: 640px) { .hero-stats { gap: 1rem 1.6rem; } .stat-num { font-size: 1.6rem; } }
 
+/* ---------- Pixel sprites + retro treatment (ui-ux-pro-max: Pixel Art) ---------- */
+.ksprite-host { line-height: 0; display: inline-block; }
+.ksprite-host svg {
+  display: block;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+  animation: ksbob 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 5px rgba(126, 200, 255, 0.4));
+}
+.ksprite-host.charging svg { animation-duration: 0.85s; filter: drop-shadow(0 0 10px var(--accent-2)); }
+@keyframes ksbob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+/* Pixel font on the agent labels + pill (kept to short strings for legibility). */
+.hero-agent-name, .agent-name {
+  font-family: "Press Start 2P", "Space Grotesk", sans-serif;
+  color: #fff; letter-spacing: 0.01em;
+}
+.hero-agent-name { font-size: 0.6rem; margin-top: 0.55rem; line-height: 1.4; }
+.agent-name { font-size: 0.58rem; }
+.hero-agent-role { font-family: var(--font-mono); }
+.hero-pill { font-family: "Press Start 2P", var(--font-mono); font-size: 0.55rem; line-height: 1.7; }
+.brand-mark { font-family: "Press Start 2P", "Space Grotesk", sans-serif; font-size: 0.85rem; }
+
+/* Subtle CRT scanlines over the ambient grid (retro-futurism, low opacity). */
+.grid-overlay::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.16) 0, rgba(0, 0, 0, 0.16) 1px, transparent 1px, transparent 3px);
+}
+
+@media (prefers-reduced-motion: reduce) { .ksprite-host svg { animation: none !important; } }
+
 .report-head {
   display: flex;
   flex-wrap: wrap;

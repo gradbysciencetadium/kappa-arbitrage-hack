@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kappa Arbitrage — Data-Backed Strategy for SMBs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
@@ -25,15 +25,15 @@
     <section class="hero" id="hero">
       <div class="hero-agents" aria-hidden="true">
         <div class="hero-agent">
-          <div class="agent-orb kappy"><span class="orb-core"></span></div>
+          <div class="ksprite-host" data-char="kappy" data-scale="6"></div>
           <span class="hero-agent-name">Kappy</span>
-          <span class="hero-agent-role">intake</span>
+          <span class="hero-agent-role">intake · she</span>
         </div>
         <div class="hero-flow"><span></span></div>
         <div class="hero-agent">
-          <div class="agent-orb bara computing"><span class="orb-core"></span></div>
+          <div class="ksprite-host" data-char="bara" data-scale="6"></div>
           <span class="hero-agent-name">Bara</span>
-          <span class="hero-agent-role">analysis</span>
+          <span class="hero-agent-role">reasoning · he</span>
         </div>
       </div>
       <div class="hero-pill">Sovereign · auditable AI for UK SMBs</div>
@@ -97,6 +97,7 @@
     <p>© 2026 Kappa Arbitrage. Analysis is advisory and based on available data; verify before major commitments.</p>
   </footer>
 
+  <script src="sprites.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

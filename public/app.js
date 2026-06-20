@@ -144,13 +144,14 @@ function addBaraWorking() {
   ).join("");
   div.innerHTML =
     `<div class="bara-head">
-       <div class="agent-orb bara computing"><span class="orb-core"></span></div>
+       <div class="ksprite-host" data-scale="4"></div>
        <div class="bara-title">Bara is analysing<small>sovereign pipeline · FLock qwen3-30b</small></div>
      </div>
      <div class="bara-pipeline"><div class="pl-track"></div>${nodes}</div>
      <div class="bara-status">› queued</div>
      <div class="bara-crypt"></div>`;
   chatWindow.appendChild(div);
+  if (window.KappaSprites) window.KappaSprites.mount(div.querySelector(".bara-head .ksprite-host"), "bara", { scale: 4, mood: "charging" });
   scrollDown();
   const crypt = div.querySelector(".bara-crypt");
   const id = setInterval(() => {
@@ -332,10 +333,11 @@ function addTyping() {
   const div = document.createElement("div");
   div.className = "agent-thinking kappy";
   div.innerHTML =
-    `<div class="agent-orb kappy"><span class="orb-core"></span></div>
+    `<div class="ksprite-host" data-scale="4"></div>
      <div><span class="agent-name">Kappy</span> <span class="agent-do"></span></div>`;
   div.querySelector(".agent-do").textContent = KAPPY_DOING[(Math.random() * KAPPY_DOING.length) | 0];
   chatWindow.appendChild(div);
+  if (window.KappaSprites) window.KappaSprites.mount(div.querySelector(".ksprite-host"), "kappy", { scale: 4 });
   scrollDown();
   return div;
 }
