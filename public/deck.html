@@ -31,11 +31,12 @@
     padding:clamp(2rem,6vw,6rem);max-width:1200px;margin:0 auto}
   .slide.active{display:flex;animation:slideIn .4s ease-out}
   @keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-  .reveal>*{opacity:0;animation:rise .5s ease-out forwards}
+  /* transform-only entrance — content is ALWAYS visible even if animation never runs */
+  .reveal>*{animation:rise .5s ease-out both}
   .reveal>*:nth-child(1){animation-delay:.05s}.reveal>*:nth-child(2){animation-delay:.13s}
   .reveal>*:nth-child(3){animation-delay:.21s}.reveal>*:nth-child(4){animation-delay:.29s}
   .reveal>*:nth-child(5){animation-delay:.37s}.reveal>*:nth-child(6){animation-delay:.45s}
-  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes rise{from{transform:translateY(14px)}to{transform:none}}
 
   .pill{display:inline-block;font-family:var(--pixel);font-size:.6rem;letter-spacing:.12em;color:var(--accent-2);
     border:1px solid rgba(126,200,255,.4);border-radius:999px;padding:.55rem 1rem;margin-bottom:1.6rem;
@@ -115,7 +116,6 @@
 </head>
 <body>
 <div class="scan"></div>
-<div class="progress" id="progress"></div>
 <div class="deck" id="deck">
 
   <!-- 1 · TITLE -->
