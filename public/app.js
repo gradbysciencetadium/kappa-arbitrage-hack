@@ -187,7 +187,7 @@ function addLeadForm() {
   div.innerHTML =
     "<strong>Want us to take this further?</strong>" +
     "<p>We select a few businesses each month for a free, in-depth project. Leave your email to apply.</p>" +
-    "<form class='lead-row'><input type='email' placeholder='you@business.com' required />" +
+    "<form class='lead-row'><input type='email' placeholder='you@business.com' aria-label='Your email address' autocomplete='email' required />" +
     "<button type='submit'>Apply</button></form>" +
     "<div class='lead-msg'></div>";
   chatWindow.appendChild(div);

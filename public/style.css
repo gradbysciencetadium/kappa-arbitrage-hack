@@ -10,6 +10,7 @@
   --accent-2: #7ec8ff;
   --user-bubble: rgba(90, 169, 255, 0.18);
   --radius: 20px;
+  --font-mono: "Fira Code", ui-monospace, "SFMono-Regular", Menlo, monospace;
   font-size: 16px;
 }
 
@@ -433,7 +434,7 @@ footer {
   margin-bottom: 0.8rem;
 }
 .gov-rec-top { display: flex; justify-content: space-between; align-items: center; }
-.gov-hash { font-family: ui-monospace, monospace; font-size: 0.78rem; color: var(--text-dim); }
+.gov-hash { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); }
 .gov-badge {
   background: linear-gradient(135deg, var(--accent), #3b7de0);
   color: #fff;
@@ -445,7 +446,7 @@ footer {
 .gov-q { color: #fff; margin: 0.5rem 0; font-size: 0.95rem; }
 .gov-meta { display: flex; flex-wrap: wrap; gap: 1rem; color: var(--text-dim); font-size: 0.8rem; }
 .gov-sources { color: var(--text-dim); font-size: 0.75rem; margin-top: 0.5rem; font-style: italic; }
-.gov-chain { font-family: ui-monospace, monospace; font-size: 0.72rem; color: var(--accent-2); margin-top: 0.5rem; }
+.gov-chain { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-2); margin-top: 0.5rem; }
 .gov-err { color: #ff8080; padding: 2rem; }
 
 .gov-verify { grid-column: 1 / -1; display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-top: 0.4rem; }
@@ -464,7 +465,7 @@ footer {
   color: var(--text-dim);
 }
 .gov-verify button.ghost:hover { color: var(--text); border-color: var(--accent); }
-.verify-result { font-size: 0.85rem; font-family: ui-monospace, monospace; }
+.verify-result { font-size: 0.85rem; font-family: var(--font-mono); }
 .verify-result.ok { color: #5fd0a0; }
 .verify-result.bad { color: #ff8080; }
 .gov-rec.broken { border-color: #ff8080; background: rgba(255, 80, 80, 0.08); box-shadow: 0 0 0 1px rgba(255, 80, 80, 0.4); }
@@ -524,14 +525,14 @@ body::after { background: rgba(70, 190, 255, 0.20); }
 .agent-thinking .agent-orb { width: 40px; height: 40px; }
 .agent-thinking .agent-orb .orb-core { width: 22px; height: 22px; }
 .agent-name { color: #fff; font-weight: 600; font-size: 0.9rem; }
-.agent-do { color: var(--text-dim); font-size: 0.82rem; font-family: ui-monospace, monospace; }
+.agent-do { color: var(--text-dim); font-size: 0.82rem; font-family: var(--font-mono); }
 
 /* ---- Bara live pipeline ---- */
 .bara-stage-wrap { align-self: stretch; }
 .bara-head { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.4rem; }
 .bara-head .agent-orb { width: 46px; height: 46px; }
 .bara-title { color: #fff; font-weight: 600; font-size: 0.95rem; }
-.bara-title small { display: block; color: var(--text-dim); font-weight: 400; font-size: 0.78rem; font-family: ui-monospace, monospace; }
+.bara-title small { display: block; color: var(--text-dim); font-weight: 400; font-size: 0.78rem; font-family: var(--font-mono); }
 
 .bara-pipeline { position: relative; display: flex; justify-content: space-between; margin: 1.1rem 0 0.6rem; padding: 0 0.3rem; }
 .pl-track { position: absolute; top: 6px; left: 8%; right: 8%; height: 2px; background: rgba(255, 255, 255, 0.10); overflow: hidden; border-radius: 2px; }
@@ -546,8 +547,8 @@ body::after { background: rgba(70, 190, 255, 0.20); }
 .pl-node.live .pl-dot { background: var(--accent-2); border-color: var(--accent-2); animation: nodePulse 1.1s ease-in-out infinite; transform: scale(1.25); }
 .pl-node.live .pl-label { color: #fff; }
 
-.bara-status { color: var(--accent-2); font-size: 0.85rem; font-family: ui-monospace, monospace; margin-top: 0.3rem; }
-.bara-crypt { font-family: ui-monospace, monospace; font-size: 0.72rem; color: rgba(126, 200, 255, 0.55); letter-spacing: 0.12em; margin-top: 0.35rem; white-space: nowrap; overflow: hidden; }
+.bara-status { color: var(--accent-2); font-size: 0.85rem; font-family: var(--font-mono); margin-top: 0.3rem; }
+.bara-crypt { font-family: var(--font-mono); font-size: 0.72rem; color: rgba(126, 200, 255, 0.55); letter-spacing: 0.12em; margin-top: 0.35rem; white-space: nowrap; overflow: hidden; }
 
 @keyframes orbSpin { to { transform: rotate(360deg); } }
 @keyframes orbGlow { 0%, 100% { box-shadow: 0 0 18px var(--accent), inset 0 0 8px rgba(255, 255, 255, 0.4); } 50% { box-shadow: 0 0 30px var(--accent-2), inset 0 0 10px rgba(255, 255, 255, 0.55); } }
@@ -559,6 +560,31 @@ body::after { background: rgba(70, 190, 255, 0.20); }
   .agent-orb::before, .agent-orb::after, .pl-track::after, .glow-line::after,
   .brand-mark, .agent-orb .orb-core, .pl-node.live .pl-dot { animation: none !important; }
 }
+
+/* ---------- Polish pass (ui-ux-pro-max: accessibility + interaction) ---------- */
+/* Visible focus ring on every interactive element (keyboard accessibility). */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+/* Remove the 300ms tap delay; ensure pointer cursor. */
+a, button, .cta, .topbar-link, .gov-back { touch-action: manipulation; }
+button, .cta { cursor: pointer; }
+/* Minimum 44px touch targets on primary controls. */
+.cta, .chat-input button, .gov-verify button, .lead-row button, .chat-input textarea { min-height: 44px; }
+.reset-btn, .topbar-link, .gov-back { display: inline-flex; align-items: center; min-height: 38px; }
+/* Tabular figures so data/hashes/numbers don't shift width. */
+.bara-crypt, .gov-hash, .gov-chain, .verify-result, .report-metrics, .gov-big,
+.gov-table td, .report-confidence { font-variant-numeric: tabular-nums; }
+/* Clear disabled state. */
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+/* Honour reduced transparency / smoother default scrolling. */
+html { scroll-behavior: smooth; }
 
 .report-head {
   display: flex;
