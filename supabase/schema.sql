@@ -65,4 +65,14 @@ create table if not exists audit_ledger (
 create index if not exists audit_ledger_created_idx on audit_ledger(created_at);
 
 -- Realtime: let the frontend subscribe to live report progress.
-alter publication supabase_realtime add table reports;
+-- Idempotent: only add the table if it isn't already in the publication, so this
+-- whole file is safe to paste & re-run.
+do $$
+begin
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'reports'
+  ) then
+    alter publication supabase_realtime add table reports;
+  end if;
+end $$;
