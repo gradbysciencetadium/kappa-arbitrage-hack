@@ -52,8 +52,8 @@ body::after {
 main, .topbar, footer { position: relative; z-index: 1; }
 
 h1, h2, h3, .brand-name {
-  font-family: "Space Grotesk", "Inter", sans-serif;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-weight: 700;
   letter-spacing: -0.01em;
 }
 
@@ -81,7 +81,7 @@ h1, h2, h3, .brand-name {
   border-radius: 12px;
   background: linear-gradient(135deg, var(--accent), #3b7de0);
   color: #fff;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--font-mono);
   font-size: 1.25rem;
   font-weight: 600;
   box-shadow: 0 4px 18px rgba(90, 169, 255, 0.35);
@@ -100,12 +100,14 @@ h1, h2, h3, .brand-name {
 }
 
 .hero h1 {
-  font-size: clamp(2rem, 5vw, 3.4rem);
-  line-height: 1.12;
+  font-size: clamp(1.5rem, 4vw, 2.6rem);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
   background: linear-gradient(120deg, #ffffff 30%, var(--accent-2) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  filter: drop-shadow(0 0 18px rgba(126, 200, 255, 0.22));
 }
 
 .hero p {
@@ -400,7 +402,7 @@ footer {
 .gov { max-width: 920px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
 .gov-head h1 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); }
 .gov-head p { color: var(--text-dim); line-height: 1.6; margin-top: 0.8rem; max-width: 720px; }
-.gov h2 { font-family: "Space Grotesk", sans-serif; margin: 2.2rem 0 0.4rem; font-size: 1.15rem; color: #fff; }
+.gov h2 { font-family: var(--font-mono); margin: 2.2rem 0 0.4rem; font-size: 1.15rem; color: #fff; }
 .gov-sub { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 0.8rem; }
 
 .gov-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
@@ -412,7 +414,7 @@ footer {
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
 }
-.gov-big { font-family: "Space Grotesk", sans-serif; font-size: 1.9rem; font-weight: 600; }
+.gov-big { font-family: var(--font-mono); font-size: 1.9rem; font-weight: 600; }
 .gov-label { color: #fff; font-size: 0.9rem; margin-top: 0.3rem; }
 .gov-cardsub { color: var(--text-dim); font-size: 0.8rem; margin-top: 0.3rem; }
 .tone-ok .gov-big { color: #5fd0a0; }
@@ -591,7 +593,7 @@ html { scroll-behavior: smooth; }
 .hero-agent { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
 .hero-agent .agent-orb { width: 60px; height: 60px; }
 .hero-agent .agent-orb .orb-core { width: 34px; height: 34px; }
-.hero-agent-name { font-family: "Space Grotesk", sans-serif; font-weight: 600; color: #fff; font-size: 0.92rem; }
+.hero-agent-name { font-family: var(--font-mono); font-weight: 600; color: #fff; font-size: 0.92rem; }
 .hero-agent-role { font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; }
 .hero-flow { width: 84px; height: 2px; position: relative; background: rgba(255, 255, 255, 0.1); overflow: hidden; border-radius: 2px; margin-bottom: 1.4rem; }
 .hero-flow span { position: absolute; inset: 0; width: 40%; background: linear-gradient(90deg, transparent, var(--accent-2), transparent); filter: drop-shadow(0 0 5px var(--accent-2)); animation: glowSweep 1.8s linear infinite; }
@@ -613,7 +615,7 @@ html { scroll-behavior: smooth; }
 }
 .stat { display: flex; flex-direction: column; align-items: center; }
 .stat-num {
-  font-family: "Space Grotesk", sans-serif; font-size: 2rem; font-weight: 700;
+  font-family: var(--font-mono); font-size: 2rem; font-weight: 700;
   color: #fff; font-variant-numeric: tabular-nums; line-height: 1;
 }
 .stat-num.stat-text { color: var(--accent-2); font-size: 1.6rem; }
@@ -673,8 +675,8 @@ html { scroll-behavior: smooth; }
 .reset-btn, .topbar-link, .gov-back, .gov-verify button.ghost { font-family: var(--font-mono); border-radius: 6px; }
 
 /* Pixel font on short structural headings/labels (kept legible). */
-.chat-header h2 { font-family: "Press Start 2P", "Space Grotesk", sans-serif; font-size: 0.7rem; line-height: 1.5; }
-.step h3 { font-family: "Press Start 2P", "Space Grotesk", sans-serif; font-size: 0.58rem; line-height: 1.6; margin-bottom: 0.7rem; }
+.chat-header h2 { font-family: var(--font-mono); font-weight: 700; font-size: 1rem; line-height: 1.4; }
+.step h3 { font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; line-height: 1.4; margin-bottom: 0.6rem; }
 .gov-badge, .report-badge { font-family: "Press Start 2P", var(--font-mono); }
 
 /* Step character sprites */
