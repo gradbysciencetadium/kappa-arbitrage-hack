@@ -109,5 +109,11 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", autoMount);
   else autoMount();
 
-  window.KappaSprites = { mount, svgFor, CHARS };
+  // Static (non-animated) sprite SVG — for message avatars.
+  function staticSprite(name, scale) {
+    const def = CHARS[name];
+    return def ? svgFor(def, def.idle, scale || 2) : "";
+  }
+
+  window.KappaSprites = { mount, svgFor, staticSprite, CHARS };
 })();

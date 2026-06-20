@@ -262,7 +262,8 @@ function renderReport(report, meta) {
   const esc = (s) => DOMPurify.sanitize(String(s == null ? "" : s));
   const parts = [];
 
-  parts.push('<div class="report-head"><span class="report-badge">Kappa Arbitrage report</span>');
+  const baraAv = window.KappaSprites ? `<span class="report-avatar">${window.KappaSprites.staticSprite("bara", 2)}</span>` : "";
+  parts.push(`<div class="report-head">${baraAv}<span class="report-badge">Bara · Kappa Arbitrage report</span>`);
   if (meta && meta.isFixture) {
     parts.push(
       '<span class="report-fixture">⚠ Built on FIXTURE sample data — not live Ofsted/ONS. For demonstration.</span>'
@@ -352,10 +353,17 @@ function addUserMessage(text) {
 }
 
 function addAgentMessage(markdown) {
+  const row = document.createElement("div");
+  row.className = "msg-row agent-row";
+  const av = document.createElement("div");
+  av.className = "msg-avatar";
+  if (window.KappaSprites) av.innerHTML = window.KappaSprites.staticSprite("kappy", 2);
   const div = document.createElement("div");
   div.className = "msg agent";
   div.innerHTML = DOMPurify.sanitize(marked.parse(markdown));
-  chatWindow.appendChild(div);
+  row.appendChild(av);
+  row.appendChild(div);
+  chatWindow.appendChild(row);
   scrollDown();
 }
 

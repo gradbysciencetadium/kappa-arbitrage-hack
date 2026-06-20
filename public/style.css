@@ -688,6 +688,66 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 3px 0 rgba(18, 46, 102, 0.9);
 }
 
+/* ---------- Glyph-glow terminal chat (ui-ux-pro-max: Retro-Futurism + Terminal CLI) ---------- */
+/* Chat card as a glowing retro dialog frame with an animated top scan line. */
+.chat-card {
+  position: relative;
+  border-color: rgba(90, 169, 255, 0.35);
+  box-shadow: 0 0 0 1px rgba(90, 169, 255, 0.16), 0 24px 64px rgba(2, 8, 24, 0.55), 0 0 44px rgba(90, 169, 255, 0.12);
+}
+.chat-card::before {
+  content: ""; position: absolute; top: 0; left: 8%; right: 8%; height: 2px; z-index: 3; pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--accent-2), transparent);
+  filter: drop-shadow(0 0 6px var(--accent-2)); opacity: 0.85;
+}
+
+/* Header: glowing title + pulsing connection dot. */
+.chat-header h2 { text-shadow: 0 0 10px rgba(126, 200, 255, 0.5); }
+.chat-header p::before {
+  content: "●"; color: #5fd0a0; margin-right: 0.45rem; font-size: 0.7em;
+  text-shadow: 0 0 6px #5fd0a0; animation: connPulse 1.8s ease-in-out infinite;
+}
+@keyframes connPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+/* CRT scanlines inside the message window. */
+.chat-window { position: relative; }
+.chat-window::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0, rgba(0, 0, 0, 0.10) 1px, transparent 1px, transparent 3px);
+}
+.chat-window > * { position: relative; z-index: 1; }
+
+/* Agent message rows: Kappy avatar + glowing dialog bubble. */
+.msg-row.agent-row { align-self: flex-start; display: flex; gap: 0.6rem; align-items: flex-end; max-width: 92%; }
+.msg-avatar { flex: 0 0 auto; line-height: 0; }
+.msg-avatar svg { width: 30px; height: 30px; image-rendering: pixelated; filter: drop-shadow(0 0 5px rgba(126, 200, 255, 0.55)); }
+.agent-row .msg.agent {
+  align-self: auto; max-width: 100%;
+  border-color: rgba(90, 169, 255, 0.28);
+  box-shadow: -2px 0 0 rgba(90, 169, 255, 0.5), 0 0 18px rgba(90, 169, 255, 0.1);
+}
+.msg.user { box-shadow: 0 0 16px rgba(90, 169, 255, 0.14); }
+
+/* Input as a terminal prompt: › glyph, monospace, inner glow. */
+.chat-input { position: relative; }
+.chat-input textarea {
+  font-family: var(--font-mono); font-size: 0.9rem; padding-left: 1.9rem;
+  box-shadow: inset 0 0 12px rgba(90, 169, 255, 0.08);
+}
+.chat-input textarea:focus { box-shadow: 0 0 0 3px rgba(90, 169, 255, 0.18), inset 0 0 14px rgba(90, 169, 255, 0.14); }
+.chat-input::before {
+  content: "›"; position: absolute; left: 1.6rem; top: 1.55rem; z-index: 2; pointer-events: none;
+  color: var(--accent-2); font-family: var(--font-mono); font-size: 1.15rem; line-height: 1;
+  text-shadow: 0 0 8px var(--accent-2);
+}
+
+/* Bara avatar on the report card. */
+.report-head { align-items: center; }
+.report-avatar { line-height: 0; }
+.report-avatar svg { width: 30px; height: 30px; image-rendering: pixelated; filter: drop-shadow(0 0 6px var(--accent-2)); }
+
+@media (prefers-reduced-motion: reduce) { .chat-header p::before { animation: none !important; } }
+
 .report-head {
   display: flex;
   flex-wrap: wrap;
