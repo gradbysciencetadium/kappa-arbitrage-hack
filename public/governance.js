@@ -51,9 +51,11 @@ const short = (h) => (h ? esc(h).slice(0, 12) + "…" : "—");
 
     // --- trust panel: what it proves / doesn't, + anchor status ---
     const anchor = d.anchor;
+    const otsBit = anchor && anchor.ots_status === "pending" ? " · ⛓ OpenTimestamps → Bitcoin (pending confirmation)" : "";
     const anchorLine = anchor
       ? `Head anchored ${esc((anchor.created_at || "").slice(0, 16))} — receipt ${anchor.verified ? "✓ valid" : "✗ invalid"}` +
-        (anchor.external_proof ? ` · <a href="${esc(anchor.external_proof)}" target="_blank" rel="noopener">external proof ↗</a>` : " (portable receipt — publish externally)")
+        otsBit +
+        (anchor.external_proof ? ` · <a href="${esc(anchor.external_proof)}" target="_blank" rel="noopener">git proof ↗</a>` : " (portable receipt — publish externally)")
       : "Not yet anchored externally — anchor the head so outsiders can witness it.";
     backtest.innerHTML = `
       <section class="gov-trust">
@@ -195,7 +197,8 @@ async function runAnchor() {
     const a = d.anchor || {};
     el.innerHTML =
       `✓ Head anchored — receipt ${d.verified ? "valid" : "invalid"}, head ${short(a.head)}` +
-      (a.external_proof ? ` · <a href="${esc(a.external_proof)}" target="_blank" rel="noopener">external proof ↗</a>` : " (portable receipt — publish externally)");
+      (a.ots_status === "pending" ? " · ⛓ OpenTimestamps → Bitcoin (pending confirmation)" : "") +
+      (a.external_proof ? ` · <a href="${esc(a.external_proof)}" target="_blank" rel="noopener">git proof ↗</a>` : " (portable receipt — publish externally)");
     el.className = "verify-result ok";
   } catch (e) {
     el.textContent = e.message;

@@ -44,9 +44,10 @@ function verifySig(hashHex, sigB64, pubB64) {
 // Re-verify an external anchor receipt: its body hashes to its digest, the signature is
 // valid, and its head matches the chain head we just recomputed.
 function verifyAnchor(anchor, chainHead) {
-  const { signature, signer_pubkey, digest, algorithm, ...body } = anchor;
-  if (sha256(canonical(body)) !== digest) return { ok: false, reason: "digest does not match body" };
-  if (!verifySig(digest, signature, signer_pubkey)) return { ok: false, reason: "signature invalid" };
+  // Verify only the originally-signed fields (extra metadata like OTS/git proofs is ignored).
+  const body = { head: anchor.head, count: anchor.count, created_at: anchor.created_at, signer: anchor.signer };
+  if (sha256(canonical(body)) !== anchor.digest) return { ok: false, reason: "digest does not match body" };
+  if (!verifySig(anchor.digest, anchor.signature, anchor.signer_pubkey)) return { ok: false, reason: "signature invalid" };
   if (chainHead && anchor.head !== chainHead) return { ok: false, reason: "anchor head != chain head" };
   return { ok: true };
 }

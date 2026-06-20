@@ -25,6 +25,26 @@ async function authUser(req) {
 // Optionally publish an anchor receipt to a PUBLIC GitHub repo (set GITHUB_ANCHOR_REPO=
 // "owner/name" + GITHUB_ANCHOR_TOKEN). The repo's git history is an externally-hosted,
 // append-only witness of the chain head — verifiable without trusting our server.
+// Notarise a digest on Bitcoin via OpenTimestamps (free, no wallet, chain-agnostic). The
+// proof is "pending" until Bitcoin confirms (a few hours) — we record it honestly as such.
+// Lazy-required + timeout-guarded so it never blocks boot or hangs a request.
+async function otsStamp(digestHex) {
+  const OpenTimestamps = require("opentimestamps");
+  const detached = OpenTimestamps.DetachedTimestampFile.fromHash(
+    new OpenTimestamps.Ops.OpSHA256(),
+    Buffer.from(digestHex, "hex")
+  );
+  await Promise.race([
+    OpenTimestamps.stamp(detached),
+    new Promise((_, rej) => setTimeout(() => rej(new Error("OpenTimestamps stamp timed out")), 20000)),
+  ]);
+  return {
+    ots_proof_hex: Buffer.from(detached.serializeToBytes()).toString("hex"),
+    ots_info: OpenTimestamps.info(detached),
+    ots_status: "pending", // submitted to Bitcoin calendars; confirmation takes a few hours
+  };
+}
+
 async function publishAnchorToGitHub(anchor) {
   const repo = process.env.GITHUB_ANCHOR_REPO;
   const token = process.env.GITHUB_ANCHOR_TOKEN;
@@ -278,6 +298,14 @@ function createApp() {
       const records = await db.getLedger();
       const integrity = ledger.verifyChain(records);
       const anchor = ledger.buildAnchor(integrity.head, records.length);
+      // 1. Bitcoin notarisation via OpenTimestamps (decentralised, no wallet) — the honest
+      //    answer to "why blockchain": a neutral external notary for the chain head.
+      try {
+        Object.assign(anchor, await otsStamp(anchor.digest));
+      } catch (e) {
+        console.warn("OpenTimestamps failed:", e.message);
+      }
+      // 2. Optional public GitHub anchor (append-only git history) if configured.
       if (process.env.GITHUB_ANCHOR_TOKEN && process.env.GITHUB_ANCHOR_REPO) {
         try {
           anchor.external_proof = await publishAnchorToGitHub(anchor);

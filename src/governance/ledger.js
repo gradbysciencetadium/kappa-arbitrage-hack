@@ -198,9 +198,11 @@ function buildAnchor(head, count) {
 }
 function verifyAnchor(anchor) {
   if (!anchor) return false;
-  const { signature, signer_pubkey, digest, algorithm, ...body } = anchor;
-  if (sha256(canonical(body)) !== digest) return false;
-  return verifySignature(digest, signature, signer_pubkey);
+  // Verify ONLY the originally-signed fields, so later metadata (OTS proof, git URL)
+  // attached after signing doesn't invalidate the receipt.
+  const body = { head: anchor.head, count: anchor.count, created_at: anchor.created_at, signer: anchor.signer };
+  if (sha256(canonical(body)) !== anchor.digest) return false;
+  return verifySignature(anchor.digest, anchor.signature, anchor.signer_pubkey);
 }
 
 // Directional accuracy across any records that carry a resolved validation outcome.
