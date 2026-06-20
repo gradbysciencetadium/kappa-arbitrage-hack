@@ -130,6 +130,7 @@ async function runBara(brief, { onProgress = () => {} } = {}) {
   //    substrate. Fabricated figures or invented wards lower confidence + are disclosed.
   onProgress("verifying every figure against the data");
   const verification = verifier.verify({ report, rankedWards, validation, coverage, brief });
+  const briefFigures = verifier.extractBriefNumbers(brief); // redacted figures (no raw brief)
   if (!verification.grounded) {
     if (typeof report.confidence === "number") {
       report.confidence = Math.max(0, round2(report.confidence - verification.confidence_penalty));
@@ -150,6 +151,8 @@ async function runBara(brief, { onProgress = () => {} } = {}) {
       coverage,
       verification,
       judge: verdict,
+      rankedWards, // substrate for the offline proof-bundle
+      briefFigures, // redacted client figures so grounding is offline-reproducible
     },
   };
 }

@@ -116,6 +116,27 @@ function buildPayload({ reportId, conversationId, brief, report, meta }) {
       top_recommendation: topRec ? topRec.ward_name : null,
       confidence: report.confidence != null ? report.confidence : null,
     },
+    // Brief-REDACTED proof bundle: enough for an outsider to RE-DERIVE the grounding check
+    // offline (the report + the computed substrate + the client's bare figures), WITHOUT the
+    // private brief. Omitting the brief can only make the check stricter, never falser.
+    proof_bundle:
+      meta && meta.rankedWards
+        ? {
+            report,
+            brief_figures: (meta && meta.briefFigures) || [],
+            rankedWards: meta.rankedWards.map((w) => ({
+              ward_name: w.ward_name,
+              opportunity_score: w.opportunity_score,
+              supply_demand_gap: w.supply_demand_gap,
+              childcare_desert_index: w.childcare_desert_index,
+              deprivation_adjusted_demand: w.deprivation_adjusted_demand,
+              competitive_quality_density: w.competitive_quality_density,
+              coverage: w.coverage,
+            })),
+            validation: (meta && meta.validation) || null,
+            coverage: (meta && meta.coverage) || null,
+          }
+        : null,
     validation: (meta && meta.validation) || null,
     inputs_hash: sha256(canonical(brief)),
     // WHEN and WHO — inside the hash, so the chain proves the record's time and author,

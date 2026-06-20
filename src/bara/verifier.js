@@ -15,23 +15,30 @@ function round(n, dp = 2) {
   return Math.round((n + Number.EPSILON) * f) / f;
 }
 
-// Numbers the client themselves stated in the brief (budget, occupancy target, etc.) are
-// legitimate to restate in the report even though they aren't computed metrics.
-function addBriefNumbers(allow, brief) {
-  if (!brief) return;
-  const s = JSON.stringify(brief);
+// Numbers the client stated in the brief (budget, occupancy target, …) are legitimate to
+// restate even though they aren't computed metrics. We extract them as a BARE LIST OF
+// FIGURES — never the raw brief — so the ledger/proof-bundle stays brief-redacted: a "150"
+// or "85" reveals nothing about the client, yet lets an offline verifier reproduce the
+// exact allow-set and confirm grounding without ever seeing the private consultation.
+function extractBriefNumbers(brief) {
+  if (!brief) return [];
+  const out = [];
   const re = /(?<![\d.])-?\d[\d,]*(?:\.\d+)?/g;
+  const s = JSON.stringify(brief);
   let m;
   while ((m = re.exec(s)) !== null) {
     const n = parseFloat(m[0].replace(/,/g, ""));
-    if (isFinite(n)) { allow.add(round(n)); allow.add(Math.round(n)); }
+    if (isFinite(n)) out.push(n);
   }
+  return out;
 }
 
 // Build the set of numbers that legitimately appear in the deterministic substrate.
-function allowedNumbers(rankedWards, validation, coverage, brief) {
+function allowedNumbers(rankedWards, validation, coverage, briefNumbers) {
   const allow = new Set();
-  addBriefNumbers(allow, brief);
+  for (const n of briefNumbers || []) {
+    if (typeof n === "number" && isFinite(n)) { allow.add(round(n)); allow.add(Math.round(n)); }
+  }
   const add = (v) => {
     if (v == null || typeof v !== "number" || !isFinite(v)) return;
     allow.add(round(v));
@@ -135,11 +142,13 @@ function verifyWards(report, rankedWards) {
   return { recommended, unknown };
 }
 
-function verify({ report, rankedWards, validation, coverage, brief }) {
+function verify({ report, rankedWards, validation, coverage, brief, briefNumbers }) {
   if (!report || typeof report !== "object") {
     return { grounded: true, ward_check: { recommended: [], unknown: [] }, numbers_checked: 0, ungrounded_numbers: [], confidence_penalty: 0, note: "" };
   }
-  const allow = allowedNumbers(rankedWards, validation, coverage, brief);
+  // Online callers pass the raw brief; the offline verifier passes the redacted figure list.
+  const bn = briefNumbers || extractBriefNumbers(brief);
+  const allow = allowedNumbers(rankedWards, validation, coverage, bn);
   const text = collectText(report);
   const nums = verifyNumbers(text, allow);
   const wards = verifyWards(report, rankedWards);
@@ -169,4 +178,4 @@ function verify({ report, rankedWards, validation, coverage, brief }) {
   };
 }
 
-module.exports = { verify, allowedNumbers, allowMatch };
+module.exports = { verify, allowedNumbers, allowMatch, extractBriefNumbers };
