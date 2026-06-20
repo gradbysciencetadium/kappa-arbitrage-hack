@@ -11,6 +11,7 @@ const auth = require("./auth");
 const ledger = require("./governance/ledger");
 const validationSeed = require("./governance/validation-seed.json");
 const { runKappy, detectBrief, stripBriefBlock } = require("./kappy");
+const coverage = require("./kappy/coverage");
 const { runBara } = require("./bara");
 
 // Resolve the authenticated user from the Authorization: Bearer <token> header (or null).
@@ -133,8 +134,24 @@ function createApp() {
 
       const brief = detectBrief(reply);
       if (brief) {
-        await db.saveBrief(convId, brief);
-        return res.json({ conversationId: convId, reply: stripBriefBlock(reply), briefReady: true });
+        // Data-aware gate: only hand off to Bara if we actually have data for the location.
+        const cov = coverage.resolveLocation(brief.location_focus);
+        if (cov.status === "covered") {
+          brief.location_focus = cov.canonical; // normalise to the exact dataset name
+          await db.saveBrief(convId, brief);
+          return res.json({ conversationId: convId, reply: stripBriefBlock(reply), briefReady: true });
+        }
+        // Uncovered/unknown: do NOT hand off a doomed brief — steer to covered areas.
+        const list = cov.covered.join(", ");
+        const note =
+          stripBriefBlock(reply) +
+          `\n\n---\n**Before Bara runs:** I don't yet have live childcare data for **${brief.location_focus || "that location"}**, and Bara won't invent figures. ` +
+          `We currently cover: ${list}.\n\nPick one of those and I'll hand it straight to Bara, or tell me which area to add next.`;
+        return res.json({
+          conversationId: convId,
+          reply: note,
+          coverage: { status: cov.status, requested: brief.location_focus || null, covered: cov.covered },
+        });
       }
       return res.json({ conversationId: convId, reply });
     } catch (err) {
