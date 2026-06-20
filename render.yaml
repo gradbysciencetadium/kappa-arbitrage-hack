@@ -1,0 +1,26 @@
+# Render Blueprint — deploys Kappa Arbitrage as a free web service.
+# On render.com: New ▸ Blueprint ▸ connect this repo. Then set the secret env vars
+# (marked sync:false) in the dashboard. Render injects PORT automatically.
+services:
+  - type: web
+    name: kappa-arbitrage
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      # --- non-secret: safe to keep in the blueprint ---
+      - key: FLOCK_MODEL
+        value: qwen3-30b-a3b-instruct-2507
+      - key: SOVEREIGN_AI
+        value: "1"
+      # --- secrets: set these in the Render dashboard (Environment tab) ---
+      - key: FLOCK_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: GEMINI_API_KEY # optional fallback; sovereign mode uses FLock
+        sync: false

@@ -1,0 +1,40 @@
+{
+  "_meta": {
+    "source": "FIXTURE / SAMPLE DATA — NOT live Ofsted/ONS data. Plausible but invented for development and demos. Replace with real connector output before any client-facing use.",
+    "local_authority": "Croydon",
+    "generated_for": "end-to-end pipeline development"
+  },
+  "areas": [
+    { "ward_code": "E05011468", "ward_name": "Addiscombe East", "local_authority": "Croydon", "pop_0_4": 1180, "imd_decile": 4, "idaci_decile": 4 },
+    { "ward_code": "E05011469", "ward_name": "Broad Green", "local_authority": "Croydon", "pop_0_4": 1620, "imd_decile": 2, "idaci_decile": 2 },
+    { "ward_code": "E05011475", "ward_name": "Selhurst", "local_authority": "Croydon", "pop_0_4": 1410, "imd_decile": 2, "idaci_decile": 1 },
+    { "ward_code": "E05011476", "ward_name": "South Norwood", "local_authority": "Croydon", "pop_0_4": 1290, "imd_decile": 3, "idaci_decile": 3 },
+    { "ward_code": "E05011480", "ward_name": "Waddon", "local_authority": "Croydon", "pop_0_4": 1050, "imd_decile": 4, "idaci_decile": 4 },
+    { "ward_code": "E05011477", "ward_name": "Shirley North", "local_authority": "Croydon", "pop_0_4": 760, "imd_decile": 7, "idaci_decile": 7 }
+  ],
+  "providers": [
+    { "urn": "EY100001", "name": "Little Acorns Day Nursery", "type": "Childcare on Non-Domestic Premises", "postcode": "CR0 6RA", "lat": 51.3805, "lng": -0.0710, "ward_code": "E05011468", "ofsted_rating": "Good", "inspection_date": "2023-05-11", "registered_places": 48, "age_min": 0, "age_max": 5 },
+    { "urn": "EY100002", "name": "Sunbeam Childcare", "type": "Childcare on Non-Domestic Premises", "postcode": "CR0 7AB", "lat": 51.3792, "lng": -0.0688, "ward_code": "E05011468", "ofsted_rating": "Outstanding", "inspection_date": "2022-11-03", "registered_places": 60, "age_min": 0, "age_max": 5 },
+    { "urn": "EY100003", "name": "Broad Green Tots", "type": "Childcare on Non-Domestic Premises", "postcode": "CR0 2TB", "lat": 51.3760, "lng": -0.1010, "ward_code": "E05011469", "ofsted_rating": "Requires improvement", "inspection_date": "2024-02-19", "registered_places": 35, "age_min": 0, "age_max": 5 },
+    { "urn": "EY100004", "name": "Rainbow Steps Nursery", "type": "Childcare on Non-Domestic Premises", "postcode": "CR0 2RG", "lat": 51.3771, "lng": -0.1042, "ward_code": "E05011469", "ofsted_rating": "Good", "inspection_date": "2023-09-27", "registered_places": 40, "age_min": 0, "age_max": 5 },
+    { "urn": "EY100005", "name": "Selhurst Park Pre-School", "type": "Childcare on Non-Domestic Premises", "postcode": "SE25 6PY", "lat": 51.3958, "lng": -0.0855, "ward_code": "E05011475", "ofsted_rating": "Good", "inspection_date": "2023-01-30", "registered_places": 30, "age_min": 2, "age_max": 5 },
+    { "urn": "EY100006", "name": "Little Explorers Selhurst", "type": "Childcare on Non-Domestic Premises", "postcode": "SE25 6XL", "lat": 51.3941, "lng": -0.0902, "ward_code": "E05011475", "ofsted_rating": "Inadequate", "inspection_date": "2024-06-12", "registered_places": 26, "age_min": 0, "age_max": 5 },
+    { "urn": "EY100007", "name": "South Norwood Nursery", "type": "Childcare on Non-Domestic Premises", "postcode": "SE25 5AX", "lat": 51.3995, "lng": -0.0721, "ward_code": "E05011476", "ofsted_rating": "Good", "inspection_date": "2022-10-05", "registered_places": 52, "age_min": 0, "age_max": 5 },
+    { "urn": "EY100008", "name": "Bright Sparks Norwood", "type": "Childcare on Non-Domestic Premises", "postcode": "SE25 4QL", "lat": 51.4012, "lng": -0.0760, "ward_code": "E05011476", "ofsted_rating": "Good", "inspection_date": "2023-07-18", "registered_places": 44, "age_min": 0, "age_max": 5 },
+    { "urn": "EY100009", "name": "Waddon Wonders", "type": "Childcare on Non-Domestic Premises", "postcode": "CR0 4HZ", "lat": 51.3702, "lng": -0.1115, "ward_code": "E05011480", "ofsted_rating": "Good", "inspection_date": "2023-03-22", "registered_places": 50, "age_min": 0, "age_max": 5 },
+    { "urn": "EY100010", "name": "Shirley Oaks Montessori", "type": "Childcare on Non-Domestic Premises", "postcode": "CR0 8YH", "lat": 51.3768, "lng": -0.0490, "ward_code": "E05011477", "ofsted_rating": "Outstanding", "inspection_date": "2022-09-14", "registered_places": 64, "age_min": 0, "age_max": 5 },
+    { "urn": "EY100011", "name": "Shirley Little Learners", "type": "Childcare on Non-Domestic Premises", "postcode": "CR0 8AE", "lat": 51.3781, "lng": -0.0521, "ward_code": "E05011477", "ofsted_rating": "Good", "inspection_date": "2023-11-08", "registered_places": 38, "age_min": 0, "age_max": 5 },
+    { "urn": "EY100012", "name": "Tiny Toes Addiscombe", "type": "Childminder", "postcode": "CR0 6QP", "lat": 51.3818, "lng": -0.0735, "ward_code": "E05011468", "ofsted_rating": "Good", "inspection_date": "2024-01-15", "registered_places": 6, "age_min": 0, "age_max": 5 }
+  ],
+  "comparables": [
+    {
+      "case_id": "CR-2021-broadgreen-open",
+      "ward_code": "E05011469",
+      "opened": "2021-09",
+      "registered_places": 56,
+      "outcome_occupancy_12m": 0.91,
+      "outcome_ofsted": "Good",
+      "note": "FIXTURE comparable: a real backtest connector would supply genuine post-opening occupancy + Ofsted outcomes."
+    }
+  ]
+}

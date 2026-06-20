@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kappa Arbitrage — Data-Backed Strategy for SMBs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">κ</span>
+      <span class="brand-name">Kappa Arbitrage</span>
+    </div>
+    <a class="topbar-link" href="/governance.html">Audit Ledger →</a>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <h1>Consulting-grade answers.<br />Without the consulting-grade invoice.</h1>
+      <p>
+        Tell us about your business and the decision you're facing. We gather your
+        context through a structured consultation, then run the numbers — footfall,
+        demographics, competition, spending patterns — and return an implementable,
+        evidence-backed plan.
+      </p>
+      <button class="cta" id="start-btn">Start your consultation</button>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <h3>Talk</h3>
+          <p>A guided conversation captures your goals, constraints and market.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <h3>Analyse</h3>
+          <p>Our analytical engine researches real data behind your question.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <h3>Act</h3>
+          <p>You receive a consulting report with a concrete implementation plan.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chat-section" id="chat-section" hidden>
+      <div class="chat-card">
+        <div class="chat-header">
+          <div>
+            <h2>Your consultation</h2>
+            <p id="chat-status">Connected — tell us about your business to begin.</p>
+          </div>
+          <button class="reset-btn" id="reset-btn" title="Start a new consultation">New consultation</button>
+        </div>
+        <div class="chat-window" id="chat-window"></div>
+        <form class="chat-input" id="chat-form">
+          <textarea
+            id="chat-text"
+            rows="1"
+            placeholder="Describe your business and the decision you're facing…"
+            autocomplete="off"
+          ></textarea>
+          <button type="submit" id="send-btn">Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Kappa Arbitrage. Analysis is advisory and based on available data; verify before major commitments.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

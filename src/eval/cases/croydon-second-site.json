@@ -1,0 +1,16 @@
+{
+  "name": "croydon-second-site",
+  "note": "Eval case: a real nursery second-site question. Scored on soundness + grounding + backtest agreement, NOT against a fixed 'correct' answer.",
+  "brief": {
+    "business_profile": "Independent day nursery, 1 Outstanding setting in Shirley, Croydon; ~£600k revenue; owner-led; 4 staff.",
+    "strategic_question": "Where in Croydon should we open our second day nursery to maximise occupancy?",
+    "current_situation": "Strong waiting list at the existing setting; no formal demand data; scouting by word of mouth.",
+    "goals_and_metrics": "85%+ occupancy within 12 months; break even by month 9.",
+    "key_constraints": "Budget for a 50-place setting; stay within Croydon; 12-month timeline.",
+    "competitive_context": "Several nearby nurseries; unsure which areas are under-served.",
+    "client_hypotheses": "North of the borough may be under-supplied.",
+    "data_available_or_gaps": "No formal demand data.",
+    "location_focus": "Croydon",
+    "vertical": "childcare"
+  }
+}

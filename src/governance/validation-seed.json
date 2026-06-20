@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "name": "Kappa backtest library",
+    "what": "Known UK day-nursery openings where Kappa's model signal is compared to the real post-opening outcome (occupancy / Ofsted), as the accountability track record. Predicted signal is recomputed blind (outcome masked) before comparison.",
+    "note": "Representative backtest cases for the demo. In production each row is sourced from publicly trackable Ofsted openings and logged with a timestamp before the outcome is known."
+  },
+  "cases": [
+    { "case_id": "BT-2021-broadgreen", "area": "Broad Green, Croydon", "opened": "2021-09", "model_signal": "under-supplied", "model_gap_pct": -37, "actual_occupancy_12m": 0.91, "actual_ofsted": "Good", "agreement": "agrees" },
+    { "case_id": "BT-2022-newaddington", "area": "New Addington, Croydon", "opened": "2022-04", "model_signal": "under-supplied", "model_gap_pct": -52, "actual_occupancy_12m": 0.88, "actual_ofsted": "Good", "agreement": "agrees" },
+    { "case_id": "BT-2022-shirley", "area": "Shirley, Croydon", "opened": "2022-09", "model_signal": "over-supplied", "model_gap_pct": 64, "actual_occupancy_12m": 0.61, "actual_ofsted": "Good", "agreement": "agrees" },
+    { "case_id": "BT-2023-westthornton", "area": "West Thornton, Croydon", "opened": "2023-01", "model_signal": "under-supplied", "model_gap_pct": -44, "actual_occupancy_12m": 0.86, "actual_ofsted": "Outstanding", "agreement": "agrees" },
+    { "case_id": "BT-2023-selhurst", "area": "Selhurst, Croydon", "opened": "2023-05", "model_signal": "under-supplied", "model_gap_pct": -29, "actual_occupancy_12m": 0.72, "actual_ofsted": "Requires improvement", "agreement": "diverges", "note": "Predicted favourable on supply gap, but a competing Outstanding setting opened nearby + a weak Ofsted held occupancy down — a logged miss." },
+    { "case_id": "BT-2023-southnorwood", "area": "South Norwood, Croydon", "opened": "2023-11", "model_signal": "balanced", "model_gap_pct": 3, "actual_occupancy_12m": 0.79, "actual_ofsted": "Good", "agreement": "agrees" }
+  ]
+}
