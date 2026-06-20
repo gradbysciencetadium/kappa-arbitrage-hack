@@ -10,6 +10,7 @@ const SUPABASE_KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_SERVICE_KE
 
 let supabase = null;
 let backend = "memory"; // "memory" until the schema probe confirms "supabase"
+let userScoped = false; // true once we confirm conversations.user_id exists (accounts enabled)
 
 if (SUPABASE_URL && SUPABASE_KEY) {
   try {
@@ -32,6 +33,23 @@ if (SUPABASE_URL && SUPABASE_KEY) {
         } else {
           backend = "supabase";
           console.log("Persistence: Supabase connected (schema OK).");
+          // Secondary probe: are the account columns present? If not, run the updated
+          // supabase/schema.sql. Until then we operate anonymously (no breakage).
+          supabase
+            .from("conversations")
+            .select("user_id")
+            .limit(1)
+            .then(({ error: e2 }) => {
+              userScoped = !e2;
+              if (e2) {
+                console.warn(
+                  "Persistence: accounts disabled — conversations.user_id missing. " +
+                    "Run the updated supabase/schema.sql to enable saved consultations."
+                );
+              } else {
+                console.log("Persistence: accounts enabled (per-user consultations).");
+              }
+            });
         }
       });
   } catch (e) {
@@ -56,14 +74,111 @@ const mem = {
 /* ------------------------------------------------------------------ *
  * Conversations + messages
  * ------------------------------------------------------------------ */
-async function createConversation() {
+async function createConversation(userId = null) {
   const id = crypto.randomUUID();
   if (usingSupabase()) {
-    await supabase.from("conversations").insert({ id });
+    await supabase.from("conversations").insert(userScoped ? { id, user_id: userId } : { id });
   } else {
-    mem.conversations.set(id, { id, messages: [], brief: null });
+    mem.conversations.set(id, {
+      id,
+      user_id: userId,
+      title: null,
+      messages: [],
+      brief: null,
+      created_at: new Date().toISOString(),
+    });
   }
   return id;
+}
+
+// Set a conversation's display title (used for the "My consultations" list).
+async function setConversationTitle(id, title) {
+  title = String(title || "").replace(/\s+/g, " ").trim().slice(0, 80);
+  if (!title) return;
+  if (usingSupabase()) {
+    if (!userScoped) return; // title column not present yet
+    await supabase.from("conversations").update({ title }).eq("id", id);
+  } else {
+    const c = mem.conversations.get(id);
+    if (c) c.title = title;
+  }
+}
+
+async function getConversation(id) {
+  if (usingSupabase()) {
+    if (!userScoped) return null; // can't establish ownership without user_id
+    const { data } = await supabase
+      .from("conversations")
+      .select("id, user_id, title, created_at")
+      .eq("id", id)
+      .maybeSingle();
+    return data || null;
+  }
+  const c = mem.conversations.get(id);
+  return c ? { id: c.id, user_id: c.user_id, title: c.title, created_at: c.created_at } : null;
+}
+
+// List a user's conversations (newest first), each annotated with whether a report exists.
+async function getUserConversations(userId) {
+  if (!userId) return [];
+  if (usingSupabase()) {
+    if (!userScoped) return [];
+    const { data: convs } = await supabase
+      .from("conversations")
+      .select("id, title, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(100);
+    const list = convs || [];
+    if (!list.length) return [];
+    const ids = list.map((c) => c.id);
+    const { data: reps } = await supabase
+      .from("reports")
+      .select("conversation_id, status")
+      .in("conversation_id", ids);
+    const repByConv = {};
+    (reps || []).forEach((r) => {
+      if (repByConv[r.conversation_id] !== "done") repByConv[r.conversation_id] = r.status;
+    });
+    return list.map((c) => ({
+      id: c.id,
+      title: c.title,
+      created_at: c.created_at,
+      reportStatus: repByConv[c.id] || null,
+    }));
+  }
+  const out = [];
+  for (const c of mem.conversations.values()) {
+    if (c.user_id !== userId) continue;
+    let reportStatus = null;
+    for (const r of mem.reports.values()) {
+      if (r.conversation_id !== c.id) continue;
+      reportStatus = r.status === "done" ? "done" : reportStatus || r.status;
+    }
+    out.push({ id: c.id, title: c.title, created_at: c.created_at || null, reportStatus });
+  }
+  out.sort((a, b) => String(b.created_at || "").localeCompare(String(a.created_at || "")));
+  return out;
+}
+
+// Latest report for a conversation (for resuming a finished consultation).
+async function getLatestReportByConversation(conversationId) {
+  if (usingSupabase()) {
+    const { data } = await supabase
+      .from("reports")
+      .select("*")
+      .eq("conversation_id", conversationId)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    return data || null;
+  }
+  let latest = null;
+  for (const r of mem.reports.values()) {
+    if (r.conversation_id !== conversationId) continue;
+    if (!latest || String(r.created_at || "") > String(latest.created_at || "")) latest = r;
+  }
+  return latest;
 }
 
 async function appendMessage(conversationId, role, text) {
@@ -233,6 +348,10 @@ async function getLedger() {
 module.exports = {
   usingSupabase,
   createConversation,
+  setConversationTitle,
+  getConversation,
+  getUserConversations,
+  getLatestReportByConversation,
   appendMessage,
   getHistory,
   conversationExists,

@@ -6,8 +6,14 @@ create extension if not exists pgcrypto;
 
 create table if not exists conversations (
   id          uuid primary key default gen_random_uuid(),
+  user_id     uuid,                      -- owner (Supabase auth.users id); null = anonymous
+  title       text,                      -- short label for the "My consultations" list
   created_at  timestamptz not null default now()
 );
+-- For databases created before accounts existed: add the columns if missing.
+alter table conversations add column if not exists user_id uuid;
+alter table conversations add column if not exists title text;
+create index if not exists conversations_user_idx on conversations(user_id, created_at desc);
 
 create table if not exists messages (
   id               bigint generated always as identity primary key,

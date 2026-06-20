@@ -12,6 +12,10 @@ const brandHome = document.getElementById("brand-home");
 let conversationId = null;
 let busy = false;
 
+// Request headers including the auth token when the user is signed in.
+const authHeaders = (extra) =>
+  window.KappaAuth ? window.KappaAuth.headers(extra) : Object.assign({ "Content-Type": "application/json" }, extra || {});
+
 const WELCOME =
   "Welcome to **Kappa Arbitrage**. I'm here to understand your business and the " +
   "decision you're facing, then deliver a data-backed consulting report.\n\n" +
@@ -63,14 +67,53 @@ if (location.hash === "#consultation") {
   showChat();
 }
 
-resetBtn.addEventListener("click", () => {
+resetBtn.addEventListener("click", () => newConsultation());
+
+// Start a fresh consultation (also reachable from the account menu).
+function newConsultation() {
   if (busy) return;
   conversationId = null;
+  showChat();
+  if (location.hash !== "#consultation") history.pushState({ view: "chat" }, "", "#consultation");
   chatWindow.innerHTML = "";
   chatStatus.textContent = "Connected — tell us about your business to begin.";
   addAgentMessage(WELCOME);
   chatText.focus();
-});
+}
+
+// Reopen a saved consultation: replay its messages, restore the report, keep chatting.
+async function resumeConversation(id) {
+  if (busy) return;
+  showChat();
+  if (location.hash !== "#consultation") history.pushState({ view: "chat" }, "", "#consultation");
+  conversationId = id;
+  chatWindow.innerHTML = "";
+  chatStatus.textContent = "Loading your consultation…";
+  try {
+    const res = await fetch("/api/conversation/" + encodeURIComponent(id), { headers: authHeaders() });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Could not load this consultation.");
+    chatWindow.innerHTML = "";
+    (data.messages || []).forEach((m) => {
+      if (m.role === "user") addUserMessage(m.text);
+      else addAgentMessage(m.text || "");
+    });
+    if (!data.messages || !data.messages.length) addAgentMessage(WELCOME);
+    if (data.report && data.report.status === "done" && data.report.result) {
+      renderReport(data.report.result, data.report.meta);
+    } else if (data.report && data.report.status === "failed") {
+      addErrorMessage("The earlier analysis failed: " + (data.report.error || "unknown error"));
+    }
+    chatStatus.textContent = "Connected — continue the conversation, or ask Bara to dig deeper.";
+  } catch (err) {
+    addErrorMessage(err.message);
+    chatStatus.textContent = "Connected";
+  }
+  chatText.focus();
+}
+
+// Let the accounts UI (auth.js) drive navigation.
+window.KappaApp = { resumeConversation, newConsultation, onLogin: () => {}, onLogout: () => {} };
 
 chatText.addEventListener("input", autoGrow);
 chatText.addEventListener("keydown", (e) => {
@@ -94,7 +137,7 @@ chatForm.addEventListener("submit", async (e) => {
   try {
     const res = await fetch("/api/chat", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify({ message, conversationId }),
     });
     const data = await res.json();
@@ -144,7 +187,7 @@ async function runAnalysis() {
   try {
     const res = await fetch("/api/analyze", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify({ conversationId }),
     });
     const data = await res.json();
@@ -154,7 +197,7 @@ async function runAnalysis() {
     const deadline = Date.now() + 15 * 60 * 1000;
     while (Date.now() < deadline) {
       await sleep(3000);
-      const r = await fetch("/api/report/" + reportId);
+      const r = await fetch("/api/report/" + reportId, { headers: authHeaders() });
       const rd = await r.json();
       if (!r.ok) throw new Error(rd.error || "Could not fetch report.");
       if (rd.progress) setProgress(rd.progress);
@@ -241,7 +284,7 @@ function addLeadForm() {
     try {
       const r = await fetch("/api/lead", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders(),
         body: JSON.stringify({ email, conversationId }),
       });
       const d = await r.json();

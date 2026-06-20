@@ -7,15 +7,82 @@ const path = require("path");
 
 const db = require("./data/db");
 const store = require("./data/store");
+const auth = require("./auth");
 const ledger = require("./governance/ledger");
 const validationSeed = require("./governance/validation-seed.json");
 const { runKappy, detectBrief, stripBriefBlock } = require("./kappy");
 const { runBara } = require("./bara");
 
+// Resolve the authenticated user from the Authorization: Bearer <token> header (or null).
+async function authUser(req) {
+  const h = req.headers.authorization || "";
+  const m = h.match(/^Bearer\s+(.+)$/i);
+  if (!m) return null;
+  return auth.verifyToken(m[1].trim());
+}
+
 function createApp() {
   const app = express();
   app.use(express.json({ limit: "1mb" }));
   app.use(express.static(path.join(__dirname, "..", "public")));
+
+  // --- Accounts (Supabase Auth, email + password) ---
+  app.post("/api/auth/signup", async (req, res) => {
+    const { email, password } = req.body || {};
+    try {
+      res.json(await auth.signup(email, password));
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    const { email, password } = req.body || {};
+    try {
+      res.json(await auth.login(email, password));
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  });
+
+  // Who am I? (used by the frontend on load to restore the session)
+  app.get("/api/auth/me", async (req, res) => {
+    const user = await authUser(req);
+    res.json({ enabled: auth.enabled(), user });
+  });
+
+  // List the signed-in user's saved consultations (newest first).
+  app.get("/api/conversations", async (req, res) => {
+    const user = await authUser(req);
+    if (!user) return res.json({ conversations: [] });
+    try {
+      res.json({ conversations: await db.getUserConversations(user.id) });
+    } catch (err) {
+      res.status(502).json({ error: err.message });
+    }
+  });
+
+  // Load a saved consultation (history + brief + latest report) to resume it.
+  app.get("/api/conversation/:id", async (req, res) => {
+    const user = await authUser(req);
+    if (!user) return res.status(401).json({ error: "Sign in to open a saved consultation." });
+    try {
+      const conv = await db.getConversation(req.params.id);
+      if (!conv || conv.user_id !== user.id) return res.status(404).json({ error: "Consultation not found." });
+
+      const history = await db.getHistory(req.params.id);
+      const messages = history.map((m) =>
+        m.role === "model" ? { role: m.role, text: stripBriefBlock(m.text) } : m
+      );
+      const brief = await db.getBrief(req.params.id);
+      const r = await db.getLatestReportByConversation(req.params.id);
+      const report = r ? { status: r.status, result: r.result, meta: r.meta, error: r.error } : null;
+
+      res.json({ id: conv.id, title: conv.title, messages, briefReady: !!brief, report });
+    } catch (err) {
+      res.status(502).json({ error: err.message });
+    }
+  });
 
   // --- Kappy intake ---
   app.post("/api/chat", async (req, res) => {
@@ -25,9 +92,12 @@ function createApp() {
     }
 
     try {
+      const user = await authUser(req);
       let convId = conversationId;
+      let isNew = false;
       if (!convId || !(await db.conversationExists(convId))) {
-        convId = await db.createConversation();
+        convId = await db.createConversation(user ? user.id : null);
+        isNew = true;
       }
 
       const prior = await db.getHistory(convId);
@@ -37,6 +107,7 @@ function createApp() {
 
       await db.appendMessage(convId, "user", message.trim());
       await db.appendMessage(convId, "model", reply);
+      if (isNew) db.setConversationTitle(convId, message.trim().slice(0, 60)).catch(() => {});
 
       const brief = detectBrief(reply);
       if (brief) {
