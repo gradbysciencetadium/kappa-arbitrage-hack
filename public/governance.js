@@ -116,6 +116,31 @@ const short = (h) => (h ? esc(h).slice(0, 12) + "…" : "—");
         .join("");
       records.innerHTML = `<h2>Live audit trail (hash-chained · signed)</h2>${items}`;
     }
+    // --- AI risk monitor (computed over the signed ledger) ---
+    try {
+      const mr = await fetch("/api/risk-monitor");
+      const md = await mr.json();
+      const mon = document.getElementById("gov-monitor");
+      if (mon) {
+        if (md.status === "insufficient_data") {
+          mon.innerHTML = `<h2>AI risk monitor</h2><p class="gov-sub">Insufficient data — need ≥${md.min_sample} analyses (have ${md.sample_size}). Run a few consultations to populate.</p>`;
+        } else {
+          const t = md.metrics;
+          const tile = (big, label) => `<div class="gov-card tone-accent"><div class="gov-big">${esc(big)}</div><div class="gov-label">${esc(label)}</div></div>`;
+          mon.innerHTML =
+            `<h2>AI risk monitor</h2><p class="gov-sub">Post-market monitoring (EU AI Act Art. 72 style), computed over the signed ledger — every figure independently re-derivable.</p>` +
+            `<div class="gov-cards">` +
+            tile(t.caught_hallucinations, "caught hallucinations") +
+            tile((t.grounding_failure_rate_pct ?? 0) + "%", "grounding-failure rate") +
+            tile(t.low_confidence_count, "low-confidence reports") +
+            tile((t.sovereign_share_pct ?? 0) + "%", "on sovereign (FLock)") +
+            `</div>` +
+            ((md.alerts || []).length
+              ? `<div class="gov-alerts">${md.alerts.map((a) => `<div class="gov-alert">⚠ ${esc(a)}</div>`).join("")}</div>`
+              : `<p class="gov-sub">No active alerts.</p>`);
+        }
+      }
+    } catch (_) { /* monitor is best-effort */ }
   } catch (e) {
     summary.innerHTML = `<div class="gov-err">${esc(e.message)}</div>`;
   } finally {

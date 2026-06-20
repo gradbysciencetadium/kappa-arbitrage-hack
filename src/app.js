@@ -315,6 +315,53 @@ function createApp() {
     }
   });
 
+  // --- Post-market AI risk monitor (EU AI Act Art. 72 style) ---
+  // Computed entirely over the signed, hash-chained ledger; every figure is therefore
+  // independently re-derivable via scripts/verify-ledger.js. Rates are gated behind a
+  // minimum sample size so we never advertise a percentage off 1-2 records.
+  app.get("/api/risk-monitor", async (req, res) => {
+    try {
+      const records = await db.getLedger();
+      const n = records.length;
+      const MIN_N = 3;
+      let groundingFailures = 0, caughtHallucinations = 0, lowConfidence = 0, lowCoverage = 0, sovereign = 0, offSovereign = 0;
+      for (const r of records) {
+        const p = r.payload || {};
+        const g = p.grounding;
+        if (g && g.grounded === false) groundingFailures++;
+        if (g && Array.isArray(g.unknown_wards)) caughtHallucinations += g.unknown_wards.length;
+        const conf = p.prediction && p.prediction.confidence;
+        if (typeof conf === "number" && conf < 0.7) lowConfidence++;
+        if (p.coverage && typeof p.coverage.group_based_geocoded_pct === "number" && p.coverage.group_based_geocoded_pct < 80) lowCoverage++;
+        if (p.model && p.model.sovereign === true) sovereign++; else offSovereign++;
+      }
+      const enough = n >= MIN_N;
+      const pct = (x) => (enough ? Math.round((x / n) * 1000) / 10 : null);
+      const alerts = [];
+      if (enough) {
+        if (groundingFailures / n > 0.1) alerts.push(`Grounding-failure rate ${pct(groundingFailures)}% exceeds the 10% threshold.`);
+        if (offSovereign > 0) alerts.push(`${offSovereign}/${n} analyses ran off sovereign (FLock) inference.`);
+        if (lowCoverage / n > 0.25) alerts.push(`${lowCoverage}/${n} analyses ran on low data coverage (<80% geocoded).`);
+      }
+      res.json({
+        sample_size: n,
+        min_sample: MIN_N,
+        status: enough ? "ok" : "insufficient_data",
+        metrics: {
+          caught_hallucinations: caughtHallucinations, // absolute — always meaningful
+          grounding_failure_rate_pct: pct(groundingFailures),
+          low_confidence_count: lowConfidence,
+          low_coverage_count: lowCoverage,
+          sovereign_share_pct: pct(sovereign),
+          off_sovereign_count: offSovereign,
+        },
+        alerts,
+      });
+    } catch (err) {
+      res.status(502).json({ error: err.message });
+    }
+  });
+
   // --- Live coverage stats (for the hero) ---
   let _statsCache = null;
   app.get("/api/stats", (req, res) => {
