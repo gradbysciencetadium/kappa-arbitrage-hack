@@ -69,6 +69,9 @@ h1, h2, h3, .brand-name {
   border-bottom: 1px solid var(--glass-border);
   position: sticky;
   top: 0;
+  /* Above main/footer (z-index:1) so the account dropdown overlays the page
+     and stays clickable — backdrop-filter traps the menu in this context. */
+  z-index: 100;
 }
 
 .brand { display: flex; align-items: center; gap: 0.65rem; }
