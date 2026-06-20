@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Croydon",
     "provider_count": 661,
-    "geocoded_count": 234,
+    "geocoded_count": 236,
     "ward_count": 28
   },
   "areas": [
@@ -5828,16 +5828,19 @@
       "name": "Growing Beans Norbury Nursery",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "SW16 4ES",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.412731,
+      "lng": -0.123631,
+      "ward_code": "E05011473",
       "ofsted_rating": "Good",
       "inspection_date": "2024-10-29",
       "registered_places": 43,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Croydon"
+      "local_authority": "Croydon",
+      "lsoa_code": "E01001085",
+      "ward_name": "Norbury Park",
+      "geocode_approx": true
     },
     {
       "urn": "EY551191",
@@ -7370,16 +7373,19 @@
       "name": "Camp  allstars",
       "type": "Childcare on non-domestic premises - Out-of-school day care",
       "postcode": "SE19 1RS",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.421263,
+      "lng": -0.09568,
+      "ward_code": "E05011467",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 0,
       "age_min": 8,
       "age_max": 18,
       "provider_status": "Active",
-      "local_authority": "Croydon"
+      "local_authority": "Croydon",
+      "lsoa_code": "E01001162",
+      "ward_name": "Crystal Palace & Upper Norwood",
+      "geocode_approx": true
     },
     {
       "urn": "EY414999",

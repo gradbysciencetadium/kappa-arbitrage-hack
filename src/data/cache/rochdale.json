@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Rochdale",
     "provider_count": 254,
-    "geocoded_count": 98,
+    "geocoded_count": 99,
     "ward_count": 20
   },
   "areas": [
@@ -4386,16 +4386,19 @@
       "name": "Tiddlywinks Day Nursery",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "OL16 4JQ",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 53.608033,
+      "lng": -2.10899,
+      "ward_code": "E05014043",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 93,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Rochdale"
+      "local_authority": "Rochdale",
+      "lsoa_code": "E01005556",
+      "ward_name": "Milnrow & Newhey",
+      "geocode_approx": true
     },
     {
       "urn": "EY486401",

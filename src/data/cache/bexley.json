@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Bexley",
     "provider_count": 486,
-    "geocoded_count": 136,
+    "geocoded_count": 137,
     "ward_count": 17
   },
   "areas": [
@@ -5084,16 +5084,19 @@
       "name": "Sendtivate Daycare",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "DA14 6BW",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.424229,
+      "lng": 0.102256,
+      "ward_code": "E05011230",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 30,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Bexley"
+      "local_authority": "Bexley",
+      "lsoa_code": "E01000457",
+      "ward_name": "Sidcup",
+      "geocode_approx": true
     },
     {
       "urn": "2512388",

@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Sandwell",
     "provider_count": 236,
-    "geocoded_count": 126,
+    "geocoded_count": 127,
     "ward_count": 24
   },
   "areas": [
@@ -3816,16 +3816,19 @@
       "name": "Cohort Tuition Bh Limited",
       "type": "Childcare on non-domestic premises - Out-of-school day care",
       "postcode": "B65 0ND",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 52.475727,
+      "lng": -2.041071,
+      "ward_code": "E05001261",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 0,
       "age_min": 8,
       "age_max": 18,
       "provider_status": "Active",
-      "local_authority": "Sandwell"
+      "local_authority": "Sandwell",
+      "lsoa_code": "E01009932",
+      "ward_name": "Blackheath",
+      "geocode_approx": true
     },
     {
       "urn": "EY432220",

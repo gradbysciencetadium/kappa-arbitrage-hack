@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Hackney",
     "provider_count": 463,
-    "geocoded_count": 155,
+    "geocoded_count": 156,
     "ward_count": 21
   },
   "areas": [
@@ -686,16 +686,19 @@
       "name": "Bright Horizons Stoke Newington Day Nursery and Preschool",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "N16 0LN",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.562678,
+      "lng": -0.07447,
+      "ward_code": "E05009385",
       "ofsted_rating": "Good",
       "inspection_date": "2022-03-08",
       "registered_places": 92,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Hackney"
+      "local_authority": "Hackney",
+      "lsoa_code": "E01001831",
+      "ward_name": "Stoke Newington",
+      "geocode_approx": true
     },
     {
       "urn": "2546243",

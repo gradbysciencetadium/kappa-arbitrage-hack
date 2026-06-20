@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Hillingdon",
     "provider_count": 384,
-    "geocoded_count": 158,
+    "geocoded_count": 159,
     "ward_count": 21
   },
   "areas": [
@@ -5640,16 +5640,19 @@
       "name": "Stem Den",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "HA6 3QY",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.611959,
+      "lng": -0.40487,
+      "ward_code": "E05013575",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 0,
       "age_min": 8,
       "age_max": 18,
       "provider_status": "Active",
-      "local_authority": "Hillingdon"
+      "local_authority": "Hillingdon",
+      "lsoa_code": "E01002482",
+      "ward_name": "Northwood Hills",
+      "geocode_approx": true
     },
     {
       "urn": "2643315",

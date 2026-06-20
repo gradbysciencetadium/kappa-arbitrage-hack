@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Newham",
     "provider_count": 432,
-    "geocoded_count": 175,
+    "geocoded_count": 176,
     "ward_count": 24
   },
   "areas": [
@@ -1056,16 +1056,19 @@
       "name": "The Alphabet House Nursery",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "E6 2SX",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.533213,
+      "lng": 0.05926,
+      "ward_code": "E05013926",
       "ofsted_rating": "Outstanding",
       "inspection_date": "2024-04-30",
       "registered_places": 24,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Newham"
+      "local_authority": "Newham",
+      "lsoa_code": "E01003622",
+      "ward_name": "Wall End",
+      "geocode_approx": true
     },
     {
       "urn": "EY301046",

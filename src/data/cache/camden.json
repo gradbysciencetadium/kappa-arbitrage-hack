@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Camden",
     "provider_count": 245,
-    "geocoded_count": 112,
+    "geocoded_count": 113,
     "ward_count": 20
   },
   "areas": [
@@ -2310,16 +2310,19 @@
       "name": "UCL Nursery",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "WC1H 0PQ",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.524259,
+      "lng": -0.129833,
+      "ward_code": "E05013653",
       "ofsted_rating": "Good",
       "inspection_date": "2024-11-04",
       "registered_places": 42,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Camden"
+      "local_authority": "Camden",
+      "lsoa_code": "E01035711",
+      "ward_name": "Bloomsbury",
+      "geocode_approx": true
     },
     {
       "urn": "2696140",

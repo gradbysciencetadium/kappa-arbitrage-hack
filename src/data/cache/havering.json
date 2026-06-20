@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Havering",
     "provider_count": 396,
-    "geocoded_count": 182,
+    "geocoded_count": 184,
     "ward_count": 20
   },
   "areas": [
@@ -1808,16 +1808,19 @@
       "name": "Abbs Cross Day Nursery 4",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "RM13 8QD",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.528748,
+      "lng": 0.171227,
+      "ward_code": "E05013967",
       "ofsted_rating": "Good",
       "inspection_date": "2024-03-14",
       "registered_places": 50,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Havering"
+      "local_authority": "Havering",
+      "lsoa_code": "E01002368",
+      "ward_name": "Beam Park",
+      "geocode_approx": true
     },
     {
       "urn": "EY488395",
@@ -6144,16 +6147,19 @@
       "name": "Centre Of Excellence",
       "type": "Childcare on non-domestic premises - Out-of-school day care",
       "postcode": "RM3 7YA",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.609884,
+      "lng": 0.20921,
+      "ward_code": "E05013975",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 0,
       "age_min": 8,
       "age_max": 18,
       "provider_status": "Active",
-      "local_authority": "Havering"
+      "local_authority": "Havering",
+      "lsoa_code": "E01002313",
+      "ward_name": "Heaton",
+      "geocode_approx": true
     },
     {
       "urn": "2750153",

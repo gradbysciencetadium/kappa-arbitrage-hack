@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Birmingham",
     "provider_count": 961,
-    "geocoded_count": 522,
+    "geocoded_count": 524,
     "ward_count": 69
   },
   "areas": [
@@ -5556,16 +5556,19 @@
       "name": "Building Blocks Nursery",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "B44 9HU",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 52.554934,
+      "lng": -1.894951,
+      "ward_code": "E05011159",
       "ofsted_rating": "Good",
       "inspection_date": "2023-10-16",
       "registered_places": 41,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Birmingham"
+      "local_authority": "Birmingham",
+      "lsoa_code": "E01009222",
+      "ward_name": "Oscott",
+      "geocode_approx": true
     },
     {
       "urn": "2703200",
@@ -10616,16 +10619,19 @@
       "name": "Smart Kids Club (Newtown)",
       "type": "Childcare on non-domestic premises - Out-of-school day care",
       "postcode": "B19 2SB",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 52.497481,
+      "lng": -1.896857,
+      "ward_code": "E05011156",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 0,
       "age_min": 5,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Birmingham"
+      "local_authority": "Birmingham",
+      "lsoa_code": "E01008913",
+      "ward_name": "Newtown",
+      "geocode_approx": true
     },
     {
       "urn": "2503600",

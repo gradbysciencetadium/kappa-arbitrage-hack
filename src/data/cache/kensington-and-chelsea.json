@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Kensington and Chelsea",
     "provider_count": 131,
-    "geocoded_count": 87,
+    "geocoded_count": 89,
     "ward_count": 18
   },
   "areas": [
@@ -1174,16 +1174,19 @@
       "name": "Kinderzimmer South Kensington",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "SW7 4SE",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.495379,
+      "lng": -0.183341,
+      "ward_code": "E05009401",
       "ofsted_rating": "Good",
       "inspection_date": "2025-05-08",
       "registered_places": 89,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Kensington and Chelsea"
+      "local_authority": "Kensington and Chelsea",
+      "lsoa_code": "E01002887",
+      "ward_name": "Queen's Gate",
+      "geocode_approx": true
     },
     {
       "urn": "EY477460",
@@ -1694,16 +1697,19 @@
       "name": "Club V Kensington",
       "type": "Childcare on non-domestic premises - Sessional day care",
       "postcode": "W8 4HP",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.502712,
+      "lng": -0.189432,
+      "ward_code": "E05009390",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 0,
       "age_min": 5,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Kensington and Chelsea"
+      "local_authority": "Kensington and Chelsea",
+      "lsoa_code": "E01002826",
+      "ward_name": "Campden",
+      "geocode_approx": true
     },
     {
       "urn": "2528736",

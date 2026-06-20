@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Enfield",
     "provider_count": 629,
-    "geocoded_count": 172,
+    "geocoded_count": 173,
     "ward_count": 25
   },
   "areas": [
@@ -2734,16 +2734,19 @@
       "name": "Little Learners Nurseries Ltd",
       "type": "Childcare on non-domestic premises - Sessional day care",
       "postcode": "EN3 5XF",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.667308,
+      "lng": -0.040868,
+      "ward_code": "E05013674",
       "ofsted_rating": "Good",
       "inspection_date": "2023-05-18",
       "registered_places": 42,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Enfield"
+      "local_authority": "Enfield",
+      "lsoa_code": "E01001441",
+      "ward_name": "Brimsdown",
+      "geocode_approx": true
     },
     {
       "urn": "EY250450",

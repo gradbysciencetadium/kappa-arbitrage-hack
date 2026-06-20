@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Barking and Dagenham",
     "provider_count": 450,
-    "geocoded_count": 134,
+    "geocoded_count": 136,
     "ward_count": 19
   },
   "areas": [
@@ -906,16 +906,19 @@
       "name": "Chestnut@Gascoigne",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "IG11 7HQ",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.531887,
+      "lng": 0.081404,
+      "ward_code": "E05014061",
       "ofsted_rating": "Outstanding",
       "inspection_date": "2023-05-15",
       "registered_places": 89,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Barking and Dagenham"
+      "local_authority": "Barking and Dagenham",
+      "lsoa_code": "E01034479",
+      "ward_name": "Gascoigne",
+      "geocode_approx": true
     },
     {
       "urn": "2587082",
@@ -1962,16 +1965,19 @@
       "name": "Westbury Day Nursery Limited",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "IG11 7PT",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.534802,
+      "lng": 0.086397,
+      "ward_code": "E05014053",
       "ofsted_rating": "Good",
       "inspection_date": "2023-08-22",
       "registered_places": 54,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Barking and Dagenham"
+      "local_authority": "Barking and Dagenham",
+      "lsoa_code": "E01000050",
+      "ward_name": "Abbey",
+      "geocode_approx": true
     },
     {
       "urn": "EY546697",

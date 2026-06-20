@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Tower Hamlets",
     "provider_count": 257,
-    "geocoded_count": 126,
+    "geocoded_count": 127,
     "ward_count": 20
   },
   "areas": [
@@ -4504,16 +4504,19 @@
       "name": "Explore Learning Whitechapel",
       "type": "Childcare on non-domestic premises - Out-of-school day care",
       "postcode": "E1 4UW",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.520789,
+      "lng": -0.05042,
+      "ward_code": "E05009334",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 0,
       "age_min": 8,
       "age_max": 18,
       "provider_status": "Active",
-      "local_authority": "Tower Hamlets"
+      "local_authority": "Tower Hamlets",
+      "lsoa_code": "E01004290",
+      "ward_name": "Stepney Green",
+      "geocode_approx": true
     },
     {
       "urn": "EY356388",

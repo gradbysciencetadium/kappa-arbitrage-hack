@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Newcastle upon Tyne",
     "provider_count": 204,
-    "geocoded_count": 126,
+    "geocoded_count": 127,
     "ward_count": 26
   },
   "areas": [
@@ -2420,16 +2420,19 @@
       "name": "Little Bears Trevelyan Drive",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "NE5 4BP",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 55.005952,
+      "lng": -1.683213,
+      "ward_code": "E05011450",
       "ofsted_rating": "Good",
       "inspection_date": "2025-02-11",
       "registered_places": 43,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Newcastle upon Tyne"
+      "local_authority": "Newcastle upon Tyne",
+      "lsoa_code": "E01008459",
+      "ward_name": "Kingston Park South & Newbiggin Hall",
+      "geocode_approx": true
     },
     {
       "urn": "2862685",

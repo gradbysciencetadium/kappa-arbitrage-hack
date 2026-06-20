@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Lambeth",
     "provider_count": 510,
-    "geocoded_count": 188,
+    "geocoded_count": 190,
     "ward_count": 25
   },
   "areas": [
@@ -1670,16 +1670,19 @@
       "name": "The Pelican Nursery",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "SE11 4HG",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.488823,
+      "lng": -0.110455,
+      "ward_code": "E05014105",
       "ofsted_rating": "Good",
       "inspection_date": "2024-05-14",
       "registered_places": 21,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Lambeth"
+      "local_authority": "Lambeth",
+      "lsoa_code": "E01003107",
+      "ward_name": "Kennington",
+      "geocode_approx": true
     },
     {
       "urn": "EY385307",
@@ -6120,16 +6123,19 @@
       "name": "Star Club",
       "type": "Childcare on non-domestic premises - Out-of-school day care",
       "postcode": "SE27 9JX",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.433017,
+      "lng": -0.102888,
+      "ward_code": "E05014106",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 0,
       "age_min": 8,
       "age_max": 18,
       "provider_status": "Active",
-      "local_authority": "Lambeth"
+      "local_authority": "Lambeth",
+      "lsoa_code": "E01003081",
+      "ward_name": "Knight's Hill",
+      "geocode_approx": true
     },
     {
       "urn": "2824965",

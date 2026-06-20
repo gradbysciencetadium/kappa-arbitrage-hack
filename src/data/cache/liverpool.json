@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Liverpool",
     "provider_count": 331,
-    "geocoded_count": 181,
+    "geocoded_count": 183,
     "ward_count": 30
   },
   "areas": [
@@ -2886,16 +2886,19 @@
       "name": "Little Angels @ Woolton Village Nursery And Pre-School",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "L25 8RP",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 53.373962,
+      "lng": -2.865175,
+      "ward_code": "E05015313",
       "ofsted_rating": "Good",
       "inspection_date": "2022-08-01",
       "registered_places": 60,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Liverpool"
+      "local_authority": "Liverpool",
+      "lsoa_code": "E01006533",
+      "ward_name": "Much Woolton & Hunts Cross",
+      "geocode_approx": true
     },
     {
       "urn": "503967",
@@ -3182,16 +3185,19 @@
       "name": "Kids in Bloom Children's Day Nursery Ltd @ The University of Liverpool",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "L69 7SY",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 53.401107,
+      "lng": -2.962889,
+      "ward_code": "E05015285",
       "ofsted_rating": "Outstanding",
       "inspection_date": "2024-08-29",
       "registered_places": 100,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Liverpool"
+      "local_authority": "Liverpool",
+      "lsoa_code": "E01006512",
+      "ward_name": "Canning",
+      "geocode_approx": true
     },
     {
       "urn": "503914",

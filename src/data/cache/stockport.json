@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Stockport",
     "provider_count": 352,
-    "geocoded_count": 152,
+    "geocoded_count": 153,
     "ward_count": 21
   },
   "areas": [
@@ -4704,16 +4704,19 @@
       "name": "The Heatons Preschool and Day Nursery",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "SK4 4LW",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 53.426575,
+      "lng": -2.177073,
+      "ward_code": "E05015026",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 76,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Stockport"
+      "local_authority": "Stockport",
+      "lsoa_code": "E01005866",
+      "ward_name": "Heatons North",
+      "geocode_approx": true
     },
     {
       "urn": "EY483107",

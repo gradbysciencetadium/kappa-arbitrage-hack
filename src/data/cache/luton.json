@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Luton",
     "provider_count": 196,
-    "geocoded_count": 95,
+    "geocoded_count": 96,
     "ward_count": 19
   },
   "areas": [
@@ -630,16 +630,19 @@
       "name": "Childcare @ Stepping Stones",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "LU1 2BW",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.877891,
+      "lng": -0.416931,
+      "ward_code": "E05014739",
       "ofsted_rating": "Good",
       "inspection_date": "2023-04-24",
       "registered_places": 15,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Luton"
+      "local_authority": "Luton",
+      "lsoa_code": "E01033803",
+      "ward_name": "Central",
+      "geocode_approx": true
     },
     {
       "urn": "2515535",

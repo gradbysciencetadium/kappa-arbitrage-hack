@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Harrow",
     "provider_count": 299,
-    "geocoded_count": 152,
+    "geocoded_count": 153,
     "ward_count": 22
   },
   "areas": [
@@ -3616,16 +3616,19 @@
       "name": "Activetime Day Nursery Ltd",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "HA1 2QA",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.585337,
+      "lng": -0.330281,
+      "ward_code": "E05013546",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 76,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Harrow"
+      "local_authority": "Harrow",
+      "lsoa_code": "E01002130",
+      "ward_name": "Greenhill",
+      "geocode_approx": true
     },
     {
       "urn": "2669090",

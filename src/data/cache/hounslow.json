@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Hounslow",
     "provider_count": 355,
-    "geocoded_count": 147,
+    "geocoded_count": 148,
     "ward_count": 22
   },
   "areas": [
@@ -1906,16 +1906,19 @@
       "name": "Katey's Nursery & Preschool",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "TW8 8HF",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.481683,
+      "lng": -0.311574,
+      "ward_code": "E05013627",
       "ofsted_rating": "Good",
       "inspection_date": "2023-06-20",
       "registered_places": 60,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Hounslow"
+      "local_authority": "Hounslow",
+      "lsoa_code": "E01033082",
+      "ward_name": "Syon & Brentford Lock",
+      "geocode_approx": true
     },
     {
       "urn": "2719763",

@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Ealing",
     "provider_count": 471,
-    "geocoded_count": 232,
+    "geocoded_count": 233,
     "ward_count": 24
   },
   "areas": [
@@ -768,16 +768,19 @@
       "name": "Yellow Butterfly Nursery",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "UB1 2TS",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.522245,
+      "lng": -0.371106,
+      "ward_code": "E05013526",
       "ofsted_rating": "Good",
       "inspection_date": "2023-06-13",
       "registered_places": 38,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Ealing"
+      "local_authority": "Ealing",
+      "lsoa_code": "E01001295",
+      "ward_name": "Lady Margaret",
+      "geocode_approx": true
     },
     {
       "urn": "EY335700",

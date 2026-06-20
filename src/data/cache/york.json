@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "York",
     "provider_count": 208,
-    "geocoded_count": 102,
+    "geocoded_count": 103,
     "ward_count": 21
   },
   "areas": [
@@ -2762,16 +2762,19 @@
       "name": "Little Green Rascals - Tadcaster Road",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "YO24 1GS",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 53.943041,
+      "lng": -1.104788,
+      "ward_code": "E05010315",
       "ofsted_rating": "Good",
       "inspection_date": "2025-08-04",
       "registered_places": 131,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "York"
+      "local_authority": "York",
+      "lsoa_code": "E01013358",
+      "ward_name": "Dringhouses & Woodthorpe",
+      "geocode_approx": true
     },
     {
       "urn": "EY405189",

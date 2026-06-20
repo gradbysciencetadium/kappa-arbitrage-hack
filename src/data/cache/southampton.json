@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Southampton",
     "provider_count": 228,
-    "geocoded_count": 116,
+    "geocoded_count": 117,
     "ward_count": 16
   },
   "areas": [
@@ -1280,16 +1280,19 @@
       "name": "Earlystarts Childcare",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "SO18 4DJ",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 50.91992,
+      "lng": -1.368943,
+      "ward_code": "E05015494",
       "ofsted_rating": "Good",
       "inspection_date": "2023-07-24",
       "registered_places": 110,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Southampton"
+      "local_authority": "Southampton",
+      "lsoa_code": "E01017173",
+      "ward_name": "Bitterne Park",
+      "geocode_approx": true
     },
     {
       "urn": "EY492794",

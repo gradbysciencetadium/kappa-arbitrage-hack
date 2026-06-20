@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Manchester",
     "provider_count": 563,
-    "geocoded_count": 200,
+    "geocoded_count": 201,
     "ward_count": 32
   },
   "areas": [
@@ -5762,16 +5762,19 @@
       "name": "Kids- Time",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "M22 8ZZ",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 53.394808,
+      "lng": -2.265366,
+      "ward_code": "E05011374",
       "ofsted_rating": "Good",
       "inspection_date": "2025-04-30",
       "registered_places": 130,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Manchester"
+      "local_authority": "Manchester",
+      "lsoa_code": "E01005085",
+      "ward_name": "Northenden",
+      "geocode_approx": true
     },
     {
       "urn": "EY541201",

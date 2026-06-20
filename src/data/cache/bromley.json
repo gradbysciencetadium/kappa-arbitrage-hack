@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Bromley",
     "provider_count": 626,
-    "geocoded_count": 239,
+    "geocoded_count": 240,
     "ward_count": 22
   },
   "areas": [
@@ -10396,16 +10396,19 @@
       "name": "Little Crocs Day Nursery and Pre School",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "BR5 1SG",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.388841,
+      "lng": 0.072533,
+      "ward_code": "E05014003",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 32,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Bromley"
+      "local_authority": "Bromley",
+      "lsoa_code": "E01000807",
+      "ward_name": "Petts Wood & Knoll",
+      "geocode_approx": true
     },
     {
       "urn": "2813209",

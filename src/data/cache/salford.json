@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Salford",
     "provider_count": 282,
-    "geocoded_count": 134,
+    "geocoded_count": 135,
     "ward_count": 20
   },
   "areas": [
@@ -584,16 +584,19 @@
       "name": "Belz Cheider",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "M7 4TP",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 53.503745,
+      "lng": -2.254344,
+      "ward_code": "E05013021",
       "ofsted_rating": "Good",
       "inspection_date": "2023-06-06",
       "registered_places": 40,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Salford"
+      "local_authority": "Salford",
+      "lsoa_code": "E01005612",
+      "ward_name": "Broughton",
+      "geocode_approx": true
     },
     {
       "urn": "EY493727",

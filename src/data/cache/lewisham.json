@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Lewisham",
     "provider_count": 640,
-    "geocoded_count": 218,
+    "geocoded_count": 219,
     "ward_count": 19
   },
   "areas": [
@@ -8216,16 +8216,19 @@
       "name": "N Family Club Blackheath",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "SE3 0AT",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.466138,
+      "lng": 0.009359,
+      "ward_code": "E05013715",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 128,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Lewisham"
+      "local_authority": "Lewisham",
+      "lsoa_code": "E01003200",
+      "ward_name": "Blackheath",
+      "geocode_approx": true
     },
     {
       "urn": "2737128",

@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Portsmouth",
     "provider_count": 180,
-    "geocoded_count": 108,
+    "geocoded_count": 109,
     "ward_count": 14
   },
   "areas": [
@@ -744,16 +744,19 @@
       "name": "Southsea Nature Nursery",
       "type": "Childcare on non-domestic premises - Sessional day care",
       "postcode": "PO5 3QW",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 50.78826,
+      "lng": -1.086613,
+      "ward_code": "E05002453",
       "ofsted_rating": "Outstanding",
       "inspection_date": "2024-01-17",
       "registered_places": 38,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Portsmouth"
+      "local_authority": "Portsmouth",
+      "lsoa_code": "E01017125",
+      "ward_name": "St Jude",
+      "geocode_approx": true
     },
     {
       "urn": "2560956",

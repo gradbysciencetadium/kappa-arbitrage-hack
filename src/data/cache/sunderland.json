@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Sunderland",
     "provider_count": 123,
-    "geocoded_count": 49,
+    "geocoded_count": 50,
     "ward_count": 25
   },
   "areas": [
@@ -1506,16 +1506,19 @@
       "name": "Nurserytime",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "SR5 2LR",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 54.920801,
+      "lng": -1.399961,
+      "ward_code": "E05001172",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 74,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Sunderland"
+      "local_authority": "Sunderland",
+      "lsoa_code": "E01034514",
+      "ward_name": "Southwick",
+      "geocode_approx": true
     },
     {
       "urn": "EY542957",

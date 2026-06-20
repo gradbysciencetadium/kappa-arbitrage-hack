@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Kingston upon Thames",
     "provider_count": 250,
-    "geocoded_count": 89,
+    "geocoded_count": 91,
     "ward_count": 19
   },
   "areas": [
@@ -1064,16 +1064,19 @@
       "name": "Poppet's Pre-School",
       "type": "Childcare on non-domestic premises - Sessional day care",
       "postcode": "KT2 5TY",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.421931,
+      "lng": -0.293123,
+      "ward_code": "E05013937",
       "ofsted_rating": "Good",
       "inspection_date": "2022-11-29",
       "registered_places": 36,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Kingston upon Thames"
+      "local_authority": "Kingston upon Thames",
+      "lsoa_code": "E01002934",
+      "ward_name": "Kingston Gate",
+      "geocode_approx": true
     },
     {
       "urn": "131831",
@@ -3460,16 +3463,19 @@
       "name": "Roar Kids Academy",
       "type": "Childcare on non-domestic premises - Out-of-school day care",
       "postcode": "KT2 5TY",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.421931,
+      "lng": -0.293123,
+      "ward_code": "E05013937",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 46,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Kingston upon Thames"
+      "local_authority": "Kingston upon Thames",
+      "lsoa_code": "E01002934",
+      "ward_name": "Kingston Gate",
+      "geocode_approx": true
     },
     {
       "urn": "2821044",

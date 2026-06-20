@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Leeds",
     "provider_count": 843,
-    "geocoded_count": 314,
+    "geocoded_count": 315,
     "ward_count": 33
   },
   "areas": [
@@ -14122,16 +14122,19 @@
       "name": "Cub Headingley",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "LS6 2TN",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 53.819978,
+      "lng": -1.574396,
+      "ward_code": "E05011397",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 82,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Leeds"
+      "local_authority": "Leeds",
+      "lsoa_code": "E01032946",
+      "ward_name": "Headingley & Hyde Park",
+      "geocode_approx": true
     },
     {
       "urn": "EY499451",

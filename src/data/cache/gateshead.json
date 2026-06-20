@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Gateshead",
     "provider_count": 150,
-    "geocoded_count": 79,
+    "geocoded_count": 80,
     "ward_count": 22
   },
   "areas": [
@@ -696,16 +696,19 @@
       "name": "Rose Villa Day Nursery",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "NE16 4JF",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 54.946211,
+      "lng": -1.676061,
+      "ward_code": "E05001075",
       "ofsted_rating": "Good",
       "inspection_date": "2022-02-11",
       "registered_places": 92,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Gateshead"
+      "local_authority": "Gateshead",
+      "lsoa_code": "E01008267",
+      "ward_name": "Dunston Hill and Whickham East",
+      "geocode_approx": true
     },
     {
       "urn": "EY539480",

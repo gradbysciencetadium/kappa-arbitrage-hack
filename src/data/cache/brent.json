@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Brent",
     "provider_count": 385,
-    "geocoded_count": 167,
+    "geocoded_count": 169,
     "ward_count": 22
   },
   "areas": [
@@ -1928,16 +1928,19 @@
       "name": "N Family Club Dollis Hill",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "NW10 1DD",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.55358,
+      "lng": -0.245457,
+      "ward_code": "E05013517",
       "ofsted_rating": "Good",
       "inspection_date": "2025-09-11",
       "registered_places": 80,
       "age_min": 0,
       "age_max": 5,
       "provider_status": "Active",
-      "local_authority": "Brent"
+      "local_authority": "Brent",
+      "lsoa_code": "E01000506",
+      "ward_name": "Willesden Green",
+      "geocode_approx": true
     },
     {
       "urn": "2673611",
@@ -2386,16 +2389,19 @@
       "name": "Treetops Harlesden",
       "type": "Childcare on non-domestic premises - Full day care",
       "postcode": "NW10 3TY",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.540394,
+      "lng": -0.242259,
+      "ward_code": "E05013509",
       "ofsted_rating": "Good",
       "inspection_date": "2024-12-18",
       "registered_places": 76,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Brent"
+      "local_authority": "Brent",
+      "lsoa_code": "E01000643",
+      "ward_name": "Roundwood",
+      "geocode_approx": true
     },
     {
       "urn": "2741794",

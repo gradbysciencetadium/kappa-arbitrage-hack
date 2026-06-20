@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Redbridge",
     "provider_count": 417,
-    "geocoded_count": 208,
+    "geocoded_count": 209,
     "ward_count": 22
   },
   "areas": [
@@ -320,16 +320,19 @@
       "name": "Liberty Day Nursery and Preschool",
       "type": "Childcare on non-domestic premises - Sessional day care",
       "postcode": "IG1 1UG",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 51.561707,
+      "lng": 0.089503,
+      "ward_code": "E05011246",
       "ofsted_rating": "Good",
       "inspection_date": "2020-01-21",
       "registered_places": 26,
       "age_min": 0,
       "age_max": 8,
       "provider_status": "Active",
-      "local_authority": "Redbridge"
+      "local_authority": "Redbridge",
+      "lsoa_code": "E01033591",
+      "ward_name": "Ilford Town",
+      "geocode_approx": true
     },
     {
       "urn": "2651982",

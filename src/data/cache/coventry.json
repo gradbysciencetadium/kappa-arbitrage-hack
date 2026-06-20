@@ -3,7 +3,7 @@
     "source": "LIVE: Ofsted childcare MI + ONS Nomis Census 2021 + IMD 2019 + postcodes.io. Ingested 2026-06-20.",
     "local_authority": "Coventry",
     "provider_count": 287,
-    "geocoded_count": 100,
+    "geocoded_count": 101,
     "ward_count": 18
   },
   "areas": [
@@ -3442,16 +3442,19 @@
       "name": "Kumon Coventry East Study Center",
       "type": "Childcare on non-domestic premises - Out-of-school day care",
       "postcode": "CV3 1HW",
-      "lat": null,
-      "lng": null,
-      "ward_code": null,
+      "lat": 52.394373,
+      "lng": -1.475313,
+      "ward_code": "E05001226",
       "ofsted_rating": "Not yet inspected",
       "inspection_date": null,
       "registered_places": 0,
       "age_min": 8,
       "age_max": 18,
       "provider_status": "Active",
-      "local_authority": "Coventry"
+      "local_authority": "Coventry",
+      "lsoa_code": "E01009612",
+      "ward_name": "Lower Stoke",
+      "geocode_approx": true
     },
     {
       "urn": "2711176",
