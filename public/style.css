@@ -586,6 +586,42 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
 /* Honour reduced transparency / smoother default scrolling. */
 html { scroll-behavior: smooth; }
 
+/* ---------- Hero agents + live stats (visible landing upgrade) ---------- */
+.hero-agents { display: flex; align-items: center; justify-content: center; gap: 1.4rem; margin-bottom: 1.5rem; }
+.hero-agent { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+.hero-agent .agent-orb { width: 60px; height: 60px; }
+.hero-agent .agent-orb .orb-core { width: 34px; height: 34px; }
+.hero-agent-name { font-family: "Space Grotesk", sans-serif; font-weight: 600; color: #fff; font-size: 0.92rem; }
+.hero-agent-role { font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; }
+.hero-flow { width: 84px; height: 2px; position: relative; background: rgba(255, 255, 255, 0.1); overflow: hidden; border-radius: 2px; margin-bottom: 1.4rem; }
+.hero-flow span { position: absolute; inset: 0; width: 40%; background: linear-gradient(90deg, transparent, var(--accent-2), transparent); filter: drop-shadow(0 0 5px var(--accent-2)); animation: glowSweep 1.8s linear infinite; }
+
+.hero-pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent-2);
+  background: rgba(90, 169, 255, 0.1);
+  border: 1px solid rgba(90, 169, 255, 0.28);
+  padding: 0.35rem 0.9rem; border-radius: 999px; margin-bottom: 1.2rem;
+}
+
+.hero-stats {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 1.2rem 2.4rem; margin: 2.4rem auto 0; max-width: 640px;
+  padding-top: 2rem; border-top: 1px solid var(--glass-border);
+}
+.stat { display: flex; flex-direction: column; align-items: center; }
+.stat-num {
+  font-family: "Space Grotesk", sans-serif; font-size: 2rem; font-weight: 700;
+  color: #fff; font-variant-numeric: tabular-nums; line-height: 1;
+}
+.stat-num.stat-text { color: var(--accent-2); font-size: 1.6rem; }
+.stat-label { font-size: 0.7rem; color: var(--text-dim); margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+@media (prefers-reduced-motion: reduce) { .hero-flow span { animation: none !important; } }
+@media (max-width: 640px) { .hero-stats { gap: 1rem 1.6rem; } .stat-num { font-size: 1.6rem; } }
+
 .report-head {
   display: flex;
   flex-wrap: wrap;

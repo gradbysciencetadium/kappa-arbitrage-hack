@@ -348,3 +348,35 @@ function autoGrow() {
 function scrollDown() {
   chatWindow.scrollTop = chatWindow.scrollHeight;
 }
+
+// Hero coverage stats — count up to live numbers (falls back to baked values).
+(function initHeroStats() {
+  const nums = document.querySelectorAll("#hero-stats .stat-num[data-target]");
+  if (!nums.length) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const animate = (el, target) => {
+    const dur = 1100, t0 = performance.now();
+    const step = (t) => {
+      const p = Math.min(1, (t - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased).toLocaleString();
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const run = () => nums.forEach((el) => {
+    const t = Number(el.dataset.target);
+    if (reduce) el.textContent = t.toLocaleString();
+    else animate(el, t);
+  });
+  fetch("/api/stats")
+    .then((r) => (r.ok ? r.json() : null))
+    .then((d) => {
+      if (d) {
+        const live = [d.localAuthorities, d.providers, d.wards];
+        nums.forEach((el, i) => { if (live[i] != null) el.dataset.target = live[i]; });
+      }
+    })
+    .catch(() => {})
+    .finally(run);
+})();

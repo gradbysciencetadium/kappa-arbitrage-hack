@@ -6,6 +6,7 @@ const express = require("express");
 const path = require("path");
 
 const db = require("./data/db");
+const store = require("./data/store");
 const ledger = require("./governance/ledger");
 const validationSeed = require("./governance/validation-seed.json");
 const { runKappy, detectBrief, stripBriefBlock } = require("./kappy");
@@ -147,6 +148,22 @@ function createApp() {
       res.json({ ...result, tampered: tamper, tampered_index: tamperedIndex });
     } catch (err) {
       res.status(502).json({ error: err.message });
+    }
+  });
+
+  // --- Live coverage stats (for the hero) ---
+  let _statsCache = null;
+  app.get("/api/stats", (req, res) => {
+    try {
+      if (!_statsCache) {
+        const las = store.availableLocalAuthorities();
+        let providers = 0, wards = 0;
+        for (const la of las) { providers += store.listProviders(la).length; wards += store.listAreas(la).length; }
+        _statsCache = { localAuthorities: las.length, providers, wards };
+      }
+      res.json({ ..._statsCache, sovereign: process.env.SOVEREIGN_AI === "1" || process.env.SOVEREIGN_AI === "true" });
+    } catch (e) {
+      res.status(502).json({ error: e.message });
     }
   });
 
