@@ -57,7 +57,7 @@
   strong{color:var(--accent-2)}.mono{font-family:var(--mono)}.gn{color:var(--green)}
 
   .row{display:flex;gap:1.4rem;flex-wrap:wrap}
-  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-top:.6rem;max-width:840px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:.6rem}
   .card{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;padding:1.4rem;
     backdrop-filter:blur(16px);transition:transform .2s,border-color .2s}
   .card:hover{transform:translateY(-4px);border-color:rgba(126,200,255,.45)}
@@ -161,11 +161,12 @@
 
   <!-- 4 · THREE ARTIFACTS -->
   <section class="slide reveal">
-    <div class="kicker">Track 3 — working artifacts, not slides</div>
+    <div class="kicker">Track 3 — three working artifacts, not slides</div>
     <h2>Governance you can <span class="g">run</span>.</h2>
     <div class="cards">
-      <div class="card"><span class="n">AI AUDIT TOOL</span><h3>Signed, hash-chained ledger</h3><p>Every analysis is an Ed25519-signed, SHA-256 hash-chained record — the question, sources, model + output hash, and a code-checked grounding result. Tamper-evident, and verifiable by anyone.</p></div>
+      <div class="card"><span class="n">AI AUDIT TOOL</span><h3>Signed, hash-chained ledger</h3><p>Every analysis is an Ed25519-signed, SHA-256 hash-chained record — the question, sources, model + output hash, and a code-checked grounding result. Tamper-evident.</p></div>
       <div class="card"><span class="n">AI RISK MONITOR</span><h3>Live risk monitoring</h3><p>Caught hallucinations, grounding-failure rate, low-confidence counts and sovereign-inference share — computed over the signed ledger, with threshold alerts.</p></div>
+      <div class="card"><span class="n">EXTERNAL NOTARY</span><h3>Bitcoin notarisation</h3><p>The chain head is stamped to Bitcoin via OpenTimestamps — a neutral external witness. Tamper-<em>evident</em> becomes tamper-<em>resistant</em>.</p></div>
     </div>
   </section>
 
