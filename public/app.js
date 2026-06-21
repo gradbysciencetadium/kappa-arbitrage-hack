@@ -492,6 +492,9 @@ function scrollDown() {
       if (d) {
         const live = [d.localAuthorities, d.providers, d.wards];
         nums.forEach((el, i) => { if (live[i] != null) el.dataset.target = live[i]; });
+        // Only claim "Sovereign" when inference is actually routed through FLock.
+        const pill = document.getElementById("hero-pill");
+        if (pill) pill.textContent = d.sovereign ? "Sovereign · auditable AI for UK SMBs" : "Auditable AI for UK SMBs";
       }
     })
     .catch(() => {})
