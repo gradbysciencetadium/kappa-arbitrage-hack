@@ -368,7 +368,6 @@ function createApp() {
       const alerts = [];
       if (enough) {
         if (groundingFailures / n > 0.1) alerts.push(`Grounding-failure rate ${pct(groundingFailures)}% exceeds the 10% threshold.`);
-        if (offSovereign > 0) alerts.push(`${offSovereign}/${n} analyses ran off sovereign (FLock) inference.`);
         if (lowCoverage / n > 0.25) alerts.push(`${lowCoverage}/${n} analyses ran on low data coverage (<80% geocoded).`);
       }
       res.json({
